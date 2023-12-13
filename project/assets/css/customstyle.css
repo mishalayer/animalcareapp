@@ -1,0 +1,54 @@
+.customSortable {
+    background-color: var(--bs-card-color) !important;
+}
+
+.collapseButton {
+    position: absolute;
+    right: 10px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.collapseRotate {
+    transform: rotate(180deg);
+}
+
+.customCollapse {
+    display: none;
+}
+
+.customSpan {
+    display: inline-block;
+    min-width: 100px;
+}
+
+.trashButton {
+    position: absolute;
+    right: 50px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.customFilters {
+    max-width: 33%;
+    max-height: 43px;
+}
+
+.edit-btn {
+    height: 30px;
+    width: 30px;
+}
+
+.filter-btn {
+    height: 100%;
+}
+
+.hide-filters {
+    display: none !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .customSpan {
+        max-width: 150px;
+    }
+}
