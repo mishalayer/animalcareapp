@@ -16,6 +16,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                     <?php
                     if ($page == 'structure') {
                         include 'layout/partials/_structure.php';
+                    } else if ($page == 'pos') {
+                        include 'layout/partials/_pos.php';
                     } else {
                         include 'layout/partials/_content.php';
                     }

@@ -47,6 +47,28 @@
     display: none !important;
 }
 
+.mw-23 {
+    max-width: 23% !important;
+}
+
+.custom-span {
+    height: 125px;
+    overflow: hidden;
+    position: relative;
+}
+
+.custom-span:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--bs-body-bg) 90%);
+    width: 100%;
+    height: 25%;
+}
+
 @media only screen and (max-width: 600px) {
     .customSpan {
         max-width: 150px;
