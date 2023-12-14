@@ -50,7 +50,7 @@ var KTSigninGeneral = function () {
                     submitButton.disabled = true;
                     var username = form.querySelector('[name="username"]').value;
                     var password = form.querySelector('[name="password"]').value;
-                    axios.post('nmgp/project/sign_in_logic.php', {
+                    axios.post('animalcareapp/project/sign_in_logic.php', {
                         username: username,
                         password: password
                     }).then(function (response) {

@@ -17,7 +17,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                             }
                             echo "' href='?page=structure'><span class='menu-bullet'><span class='bullet bullet-dot'></span></span><span class='menu-title'>Structure</span></a></div>";
                         } ?>
-                        <div class="menu-item"><a class="menu-link <?php if ($page === 'pos') {
+                        <div class="menu-item"><a class="menu-link <?php if ($page === 'pos' or  $page === 'add_element') {
                                                                         echo 'active';
                                                                     } ?>" href="?page=pos"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Main</span></a></div>
                     </div>

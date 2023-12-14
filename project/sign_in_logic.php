@@ -15,7 +15,7 @@ if ($data !== null) {
         $_SESSION['username'] = $username;
         $_SESSION['privilege'] = $row['privilege'];
         $_SESSION['loggedin'] = true;
-        $response = array('status' => 'success', 'message' => 'ავტორიზაცია წარმატებით შესრულდა', 'redirect' => 'nmgp/project/index.php');
+        $response = array('status' => 'success', 'message' => 'ავტორიზაცია წარმატებით შესრულდა', 'redirect' => 'animalcareapp/project/index.php');
     } else {
         $response = array('status' => 'error', 'message' => 'ავტორიზაციის შეცდომა');
     }

@@ -7,7 +7,7 @@
             <a href="../../demo1/dist/apps/ecommerce/sales/listing.html" class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary"><i class="bi bi-sliders"></i>დამატებითი ფილტრაცია</a>
             <!--end::Secondary button-->
             <!--begin::Primary button-->
-            <a href="../../demo1/dist/apps/ecommerce/catalog/add-product.html" class="btn btn-sm fw-bold btn-primary">New Product</a>
+            <a href="index.php?page=add_element" class="btn btn-sm fw-bold btn-primary">New Product</a>
             <!--end::Primary button-->
         </div>
         <div class="d-flex flex-column flex-xl-row">

@@ -8,7 +8,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
         <?php
         if ($page == 'structure') {
             echo "Structure";
-        } else if ($page == 'pos') {
+        } else if ($page == 'pos' or $page == 'add_element') {
             echo "Main";
         } else {
             echo "Datatable";
@@ -37,7 +37,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
             <?php
             if ($page == 'structure') {
                 echo "Structure";
-            } else if ($page == 'pos') {
+            } else if ($page == 'pos' or $page == 'add_element') {
                 echo "Main";
             } else {
                 echo "Datatable";

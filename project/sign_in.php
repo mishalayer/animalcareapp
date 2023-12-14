@@ -20,11 +20,11 @@ if (!empty($_SESSION["loggedin"])) {
     <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="nmgp/project/assets/media/logos/favicon.ico" />
+    <link rel="shortcut icon" href="animalcareapp/project/assets/media/logos/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-    <link href="nmgp/project/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="nmgp/project/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="nmgp/project/assets/css/customstyle.css" rel="stylesheet" type="text/css" />
+    <link href="animalcareapp/project/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="animalcareapp/project/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="animalcareapp/project/assets/css/customstyle.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body id="kt_body" class="app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center">
@@ -50,11 +50,11 @@ if (!empty($_SESSION["loggedin"])) {
     <div class="d-flex flex-column flex-root" id="kt_app_root">
         <style>
             body {
-                background-image: url('nmgp/project/assets/media/auth/bg10.jpeg');
+                background-image: url('animalcareapp/project/assets/media/auth/bg10.jpeg');
             }
 
             [data-bs-theme="dark"] body {
-                background-image: url('nmgp/project/assets/media/auth/bg10-dark.jpeg');
+                background-image: url('animalcareapp/project/assets/media/auth/bg10-dark.jpeg');
             }
         </style>
         <div class="d-flex justify-content-center">
@@ -88,11 +88,11 @@ if (!empty($_SESSION["loggedin"])) {
         </div>
     </div>
     <script>
-        var hostUrl = "nmgp/project/assets/";
+        var hostUrl = "animalcareapp/project/assets/";
     </script>
-    <script src="nmgp/project/assets/plugins/global/plugins.bundle.js"></script>
-    <script src="nmgp/project/assets/js/scripts.bundle.js"></script>
-    <script src="nmgp/project/assets/js/custom/authentication/sign-in/general.js"></script>
+    <script src="animalcareapp/project/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="animalcareapp/project/assets/js/scripts.bundle.js"></script>
+    <script src="animalcareapp/project/assets/js/custom/authentication/sign-in/general.js"></script>
 </body>
 
 </html>
