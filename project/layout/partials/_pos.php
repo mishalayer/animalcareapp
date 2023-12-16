@@ -7,7 +7,7 @@
             <a href="../../demo1/dist/apps/ecommerce/sales/listing.html" class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary"><i class="bi bi-sliders"></i>დამატებითი ფილტრაცია</a>
             <!--end::Secondary button-->
             <!--begin::Primary button-->
-            <a href="index.php?page=add_element" class="btn btn-sm fw-bold btn-primary">New Product</a>
+            <a href="?page=add_element" class="btn btn-sm fw-bold btn-primary">Add an animal</a>
             <!--end::Primary button-->
         </div>
         <div class="d-flex flex-column flex-xl-row">
@@ -20,20 +20,20 @@
                         <!--begin::Nav-->
                         <ul class="nav nav-pills d-flex justify-content-between nav-pills-custom gap-3 mb-6 mx-10 px-8">
                             <!--begin::Item-->
-                            <li class="nav-item mb-3 me-0">
+                            <li class="nav-item mb-3 me-0 custom-category-card category-all">
                                 <!--begin::Nav link-->
-                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg show active" data-bs-toggle="pill" href="#kt_pos_food_content_1" style="width: 138px;height: 180px">
+                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack py-7 page-bg show active" data-bs-toggle="pill" href="#kt_pos_food_content_1" style="width: 138px;height: 180px">
                                     <!--begin::Icon-->
-                                    <div class="nav-icon mb-3">
+                                    <div class="nav-icon">
                                         <!--begin::Food icon-->
-                                        <img src="assets/media/svg/food-icons/spaghetti.svg" class="w-50px" alt="" />
+                                        <img src="images/custom_images/AllAnimals.png" class="w-80px" alt="" />
                                         <!--end::Food icon-->
                                     </div>
                                     <!--end::Icon-->
                                     <!--begin::Info-->
                                     <div class="">
-                                        <span class="text-gray-800 fw-bold fs-2 d-block">Lunch</span>
-                                        <span class="text-gray-400 fw-semibold fs-7">8 Options</span>
+                                        <span class="fw-bold fs-2 d-block text-black">All Animals</span>
+                                        <span class="fw-semibold fs-7 text-black">8 Options</span>
                                     </div>
                                     <!--end::Info-->
                                 </a>
@@ -41,20 +41,20 @@
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item mb-3 me-0">
+                            <li class="nav-item mb-3 me-0 custom-category-card category-dogs">
                                 <!--begin::Nav link-->
-                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_2" style="width: 138px;height: 180px">
+                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack py-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_2" style="width: 138px;height: 180px">
                                     <!--begin::Icon-->
-                                    <div class="nav-icon mb-3">
+                                    <div class="nav-icon">
                                         <!--begin::Food icon-->
-                                        <img src="assets/media/svg/food-icons/salad.svg" class="w-50px" alt="" />
+                                        <img src="images/custom_images/Dogs.png" class="w-80px" alt="" />
                                         <!--end::Food icon-->
                                     </div>
                                     <!--end::Icon-->
                                     <!--begin::Info-->
                                     <div class="">
-                                        <span class="text-gray-800 fw-bold fs-2 d-block">Salad</span>
-                                        <span class="text-gray-400 fw-semibold fs-7">14 Salads</span>
+                                        <span class="fw-bold fs-2 d-block text-black">Dogs</span>
+                                        <span class="fw-semibold fs-7 text-black">14 Salads</span>
                                     </div>
                                     <!--end::Info-->
                                 </a>
@@ -62,20 +62,20 @@
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item mb-3 me-0">
+                            <li class="nav-item mb-3 me-0 custom-category-card category-cats">
                                 <!--begin::Nav link-->
-                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_3" style="width: 138px;height: 180px">
+                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack py-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_3" style="width: 138px;height: 180px">
                                     <!--begin::Icon-->
-                                    <div class="nav-icon mb-3">
+                                    <div class="nav-icon">
                                         <!--begin::Food icon-->
-                                        <img src="assets/media/svg/food-icons/cheeseburger.svg" class="w-50px" alt="" />
+                                        <img src="images/custom_images/Cats.png" class="w-80px" alt="" />
                                         <!--end::Food icon-->
                                     </div>
                                     <!--end::Icon-->
                                     <!--begin::Info-->
                                     <div class="">
-                                        <span class="text-gray-800 fw-bold fs-2 d-block">Burger</span>
-                                        <span class="text-gray-400 fw-semibold fs-7">5 Burgers</span>
+                                        <span class="fw-bold fs-2 d-block text-black">Cats</span>
+                                        <span class="fw-semibold fs-7 text-black">5 Burgers</span>
                                     </div>
                                     <!--end::Info-->
                                 </a>
@@ -83,20 +83,20 @@
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item mb-3 me-0">
+                            <li class="nav-item mb-3 me-0 custom-category-card category-parrots">
                                 <!--begin::Nav link-->
-                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_4" style="width: 138px;height: 180px">
+                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack py-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_4" style="width: 138px;height: 180px">
                                     <!--begin::Icon-->
-                                    <div class="nav-icon mb-3">
+                                    <div class="nav-icon">
                                         <!--begin::Food icon-->
-                                        <img src="assets/media/svg/food-icons/coffee.svg" class="w-50px" alt="" />
+                                        <img src="images/custom_images/Parrots.png" class="w-80px" alt="" />
                                         <!--end::Food icon-->
                                     </div>
                                     <!--end::Icon-->
                                     <!--begin::Info-->
                                     <div class="">
-                                        <span class="text-gray-800 fw-bold fs-2 d-block">Coffee</span>
-                                        <span class="text-gray-400 fw-semibold fs-7">7 Beverages</span>
+                                        <span class="fw-bold fs-2 d-block text-black">Parrots</span>
+                                        <span class="fw-semibold fs-7 text-black">7 Beverages</span>
                                     </div>
                                     <!--end::Info-->
                                 </a>
@@ -104,20 +104,20 @@
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <li class="nav-item mb-3 me-0">
+                            <li class="nav-item mb-3 me-0 custom-category-card category-other">
                                 <!--begin::Nav link-->
-                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_5" style="width: 138px;height: 180px">
+                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack py-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_5" style="width: 138px;height: 180px">
                                     <!--begin::Icon-->
-                                    <div class="nav-icon mb-3">
+                                    <div class="nav-icon">
                                         <!--begin::Food icon-->
-                                        <img src="assets/media/svg/food-icons/cheesecake.svg" class="w-50px" alt="" />
+                                        <img src="images/custom_images/OtherAnimals.png" class="w-80px" alt="" />
                                         <!--end::Food icon-->
                                     </div>
                                     <!--end::Icon-->
                                     <!--begin::Info-->
                                     <div class="">
-                                        <span class="text-gray-800 fw-bold fs-2 d-block">Dessert</span>
-                                        <span class="text-gray-400 fw-semibold fs-7">8 Desserts</span>
+                                        <span class="fw-bold fs-2 d-block text-black">Other</span>
+                                        <span class="fw-semibold fs-7 text-black">8 Desserts</span>
                                     </div>
                                     <!--end::Info-->
                                 </a>

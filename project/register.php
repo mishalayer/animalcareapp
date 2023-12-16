@@ -81,7 +81,7 @@ if (!empty($_SESSION["loggedin"])) {
                                     </button>
                                 </div>
                                 <div class="text-gray-500 text-center fw-semibold fs-6">
-                                    Not a Member yet? <a class="link-primary" href="animalcareapp/project/register.php">Sign up</a>
+                                    Already a member? <a class="link-primary" href="animalcareapp/project/sign_in.php">Log in</a>
                                 </div>
                             </form>
                         </div>
