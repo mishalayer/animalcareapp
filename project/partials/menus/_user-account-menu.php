@@ -18,6 +18,11 @@
     </div>
     <div class="separator my-2"></div>
     <div class="menu-item px-5">
+        <a href="?page=account_settings" class="menu-link px-5">
+            Account Settings
+        </a>
+    </div>
+    <div class="menu-item px-5">
         <a href="log_out.php" class="menu-link px-5">
             Sign Out
         </a>

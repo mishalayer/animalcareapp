@@ -27,15 +27,9 @@
                             </label>
                             <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
                                 <i class="bi bi-x fs-2"></i>
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                </i>
                             </span>
                             <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
                                 <i class="bi bi-x fs-2"></i>
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                </i>
                             </span>
                         </div>
                         <div class="text-muted fs-7">Set the animal's main image. Only *.png, *.jpg and *.jpeg image files are accepted</div>
@@ -88,7 +82,7 @@
                                     <div>
                                         <label class="form-label">Description</label>
                                         <div class="mb-2">
-                                            <textarea class="form-control" id="query" style="height: 186px;"></textarea>
+                                            <textarea class="form-control" id="query" style="height: 186px;" placeholder="Add a description"></textarea>
                                         </div>
                                         <div class="text-muted fs-7">Set a description to the product for better visibility.</div>
                                     </div>

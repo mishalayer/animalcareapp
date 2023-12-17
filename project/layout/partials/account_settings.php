@@ -1,0 +1,86 @@
+<div id="kt_app_content" class="app-content flex-column-fluid">
+    <div id="kt_app_content_container" class="app-container container-xxl">
+        <div class="card mb-5 mb-xl-10">
+            <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">Profile Details</h3>
+                </div>
+            </div>
+            <div id="kt_account_settings_profile_details" class="collapse show">
+                <form id="kt_account_profile_details_form" class="form">
+                    <div class="card-body border-top p-9">
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label fw-semibold fs-6">Avatar</label>
+                            <div class="col-lg-8">
+                                <div class="image-input image-input-outline <?php if ($_SESSION['picture_path'] === 'NULL') {
+                                                                                echo "image-input-empty";
+                                                                            } ?>" data-kt-image-input="true" style="background-image: url('images/person_images/defaultprofile.png')">
+                                    <div class="image-input-wrapper w-125px h-125px" style="background-image: <?php echo ($_SESSION['picture_path'] === 'NULL') ? 'none' : 'url("' . $_SESSION['picture_path'] . '")'; ?>"></div>
+
+                                    <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                        <i class="bi bi-pencil-fill fs-7"></i>
+                                        <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                        <input type="hidden" name="avatar_remove" />
+                                    </label>
+                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                        <i class="bi bi-x fs-2"></i>
+                                    </span>
+                                    <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                        <i class="bi bi-x fs-2"></i>
+                                    </span>
+                                </div>
+                                <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                            </div>
+                        </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Username</label>
+                            <div class="col-lg-8 fv-row">
+                                <input type="text" name="username" class="form-control form-control-lg form-control-solid" placeholder="Username" value="<?php echo ($_SESSION['username']); ?>" />
+                            </div>
+                        </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">E-mail</label>
+                            <div class="col-lg-8 fv-row">
+                                <input type="text" name="email" class="form-control form-control-lg form-control-solid" placeholder="E-mail address" value="<?php echo ($_SESSION['mail']); ?>" />
+                            </div>
+                        </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label required fw-semibold fs-6">Password</label>
+                            <div class="col-lg-8 fv-row">
+                                <input type="password" name="company" class="form-control form-control-lg form-control-solid" />
+                            </div>
+                        </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label fw-semibold fs-6">Description</label>
+                            <div class="col-lg-8 fv-row">
+                                <div class="mb-2">
+                                    <textarea class="form-control" id="description" style="height: 186px;" placeholder="Description"><?php echo ($_SESSION['description']); ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label fw-semibold fs-6">Registration date</label>
+                            <div class="col-lg-8 fv-row">
+                                <input type="text" name="reg_date" class="form-control form-control-lg form-control-solid" placeholder="registration date" value="<?php echo ($_SESSION['registration_date']); ?>" disabled />
+                            </div>
+                        </div>
+                        <!-- <div class="row mb-0">
+                            <label class="col-lg-4 col-form-label fw-semibold fs-6">Allow Marketing</label>
+                            <div class="col-lg-8 d-flex align-items-center">
+                                <div class="form-check form-check-solid form-switch form-check-custom fv-row">
+                                    <input class="form-check-input w-45px h-30px" type="checkbox" id="allowmarketing" checked="checked" />
+                                    <label class="form-check-label" for="allowmarketing"></label>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                    </div>
+                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                        <a href="?" class="btn btn-light me-5">Cancel</a>
+                        <button type="submit" class="btn btn-primary" id="account_settings_submit">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

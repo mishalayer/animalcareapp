@@ -39,6 +39,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                 echo "Structure";
             } else if ($page == 'pos' or $page == 'add_element') {
                 echo "Main";
+            } else if ($page == 'account_settings') {
+                echo "Account Settings";
             } else {
                 echo "Datatable";
             }
