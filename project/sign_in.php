@@ -65,7 +65,7 @@ if (!empty($_SESSION["loggedin"])) {
                             <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="../../demo1/dist/index.html" action="#">
                                 <div class="text-center mb-11">
                                     <h1 class="text-dark fw-bolder mb-3">ავტორიზაცია</h1>
-                                    <div class="text-gray-500 fw-semibold fs-6">GIS phonebook</div>
+                                    <div class="text-gray-500 fw-semibold fs-6">მადლობა რომ ზრუნავთ ცხოველებზე!</div>
                                 </div>
                                 <div class="fv-row mb-8">
                                     <input type="text" placeholder="სახელი" name="username" autocomplete="off" class="form-control bg-transparent" />
@@ -81,7 +81,7 @@ if (!empty($_SESSION["loggedin"])) {
                                     </button>
                                 </div>
                                 <div class="text-gray-500 text-center fw-semibold fs-6">
-                                    Not a Member yet? <a class="link-primary" href="animalcareapp/project/register.php">Sign up</a>
+                                    არ ხართ დარეგისტრირებული? <a class="link-primary" href="animalcareapp/project/register.php">დარეგისტრირდით აქ!</a>
                                 </div>
                             </form>
                         </div>

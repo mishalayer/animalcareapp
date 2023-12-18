@@ -70,19 +70,19 @@
                                 <div class="card-body pt-0">
                                     <div class="mb-8 fv-row">
                                         <label class="required form-label">Animal's Name</label>
-                                        <input type="text" name="product_name" class="form-control mb-2" placeholder="Animal's name" value="" />
+                                        <input type="text" name="name" class="form-control mb-2" placeholder="Animal's name" value="" />
                                         <div class="text-muted fs-7">The animals name is required.</div>
                                     </div>
 
                                     <div class="mb-8 fv-row">
-                                        <label class="required form-label">Location</label>
-                                        <input type="text" name="product_name" class="form-control mb-2" placeholder="Location" value="" />
-                                        <div class="text-muted fs-7">The location is required.</div>
+                                        <label class="required form-label">Information</label>
+                                        <input type="text" name="contact_info" class="form-control mb-2" placeholder="საკონტაქტო ინფორმაცია, მაგალითად: ტელეფონი, ადგილმდებარეობა" value="" />
+                                        <div class="text-muted fs-7">The information is required.</div>
                                     </div>
                                     <div>
                                         <label class="form-label">Description</label>
                                         <div class="mb-2">
-                                            <textarea class="form-control" id="query" style="height: 186px;" placeholder="Add a description"></textarea>
+                                            <textarea name="description" class="form-control" id="query" style="height: 186px;" placeholder="Add a description"></textarea>
                                         </div>
                                         <div class="text-muted fs-7">Set a description to the product for better visibility.</div>
                                     </div>

@@ -3,6 +3,9 @@
         <div class="menu-content d-flex align-items-center px-3">
             <div class="d-flex flex-column">
                 <div class="fw-bold d-flex align-items-center fs-5">
+                    <div class="symbol symbol-50px me-5">
+                        <img alt="Logo" <?php echo ($_SESSION['picture_path'] === 'NULL') ? 'src="images/person_images/defaultprofile.png"' : 'src="' . $_SESSION['picture_path'] . '")'; ?> />
+                    </div>
                     <?php echo $_SESSION['username'] ?><span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">
                         <?php if ($_SESSION['privilege'] == 2) {
                             echo "Admin";
