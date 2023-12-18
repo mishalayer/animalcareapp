@@ -109,33 +109,49 @@
     Dropzone.autoDiscover = false;
 
     var myDropzone = new Dropzone("#animal_dropzone", {
-        url: "your-upload-endpoint",
+        url: "upload_animal_images.php",
         maxFiles: 3,
         acceptedFiles: "image/*",
         addRemoveLinks: true,
         autoProcessQueue: false,
     });
 
-    myDropzone.on("addedfile", function(file) {
-        console.log("File added:", file);
+    document.querySelector("#submit_animal_button").addEventListener("click", function(event) {
+        event.preventDefault();
 
-        if (myDropzone.files.length > myDropzone.options.maxFiles) {
-            var oldestFile = myDropzone.files[0];
-            myDropzone.removeFile(oldestFile);
+        // Create FormData object
+        var formData = new FormData(document.getElementById("kt_ecommerce_add_product_form"));
 
-            console.log("Removed oldest file:", oldestFile);
+        // Append user_id to form data
+        formData.append("owner_id", <?php echo $_SESSION['user_id']; ?>);
+
+        // Find the main image element
+        var mainImageInput = document.querySelector('[name="avatar"]');
+
+        // Append the "Main image" input to FormData
+        if (mainImageInput.files.length > 0) {
+            formData.append('file[]', mainImageInput.files[0]);
+            formData.append('is_thumbnail[]', 1); // Set is_thumbnail to 1 for the main image
         }
-    });
 
-    myDropzone.on("removedfile", function(file) {
-        console.log("File removed:", file);
-    });
+        // Append thumbnail indicator for the dropzone images
+        myDropzone.files.forEach(function(file) {
+            formData.append('file[]', file);
+            formData.append('is_thumbnail[]', 0); // Set is_thumbnail to 0 for regular images
+        });
 
-    myDropzone.on("click", function() {
-        document.querySelector("#animal_dropzone input[type=file]").click();
-    });
-
-    document.querySelector("#your-submit-button").addEventListener("click", function() {
-        myDropzone.processQueue();
+        // Send formData to server using Fetch API
+        fetch('submit_animal.php', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Handle the response from the server
+            })
+            .catch(error => {
+                console.error("Error submitting form:", error);
+            });
     });
 </script>
