@@ -22,6 +22,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                         include 'layout/partials/add_element.php';
                     } else if ($page == 'account_settings') {
                         include 'layout/partials/account_settings.php';
+                    } else if ($page == 'about_animal') {
+                        include 'layout/partials/about_animal.php';
                     } else {
                         include 'layout/partials/_content.php';
                     }

@@ -79,10 +79,21 @@
                                         <input type="text" name="contact_info" class="form-control mb-2" placeholder="საკონტაქტო ინფორმაცია, მაგალითად: ტელეფონი, ადგილმდებარეობა" value="" />
                                         <div class="text-muted fs-7">The information is required.</div>
                                     </div>
+                                    <div class="mb-8 fv-row">
+                                        <label class="required form-label">Animal type</label>
+                                        <select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="animal_type" id="add_element_animal_type">
+                                            <option></option>
+                                            <option value="other" selected="selected">Other</option>
+                                            <option value="dog">Dog</option>
+                                            <option value="cat">Cat</option>
+                                            <option value="parrot">Parrot</option>
+                                        </select>
+                                        <div class="text-muted fs-7">Choose animal type.</div>
+                                    </div>
                                     <div>
                                         <label class="form-label">Description</label>
                                         <div class="mb-2">
-                                            <textarea name="description" class="form-control" id="query" style="height: 186px;" placeholder="Add a description"></textarea>
+                                            <textarea name="description" class="form-control" id="query" style="height: 150px;" placeholder="Add a description"></textarea>
                                         </div>
                                         <div class="text-muted fs-7">Set a description to the product for better visibility.</div>
                                     </div>
@@ -153,5 +164,32 @@
             .catch(error => {
                 console.error("Error submitting form:", error);
             });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var nameInput = document.querySelector('[name="name"]');
+        var informationInput = document.querySelector('[name="contact_info"]');
+        var imageInput = document.querySelector('.image-input');
+        var submitButton = document.querySelector('#submit_animal_button');
+
+        function checkRequiredFields() {
+            var nameFilled = nameInput.value.trim() !== '';
+            var informationFilled = informationInput.value.trim() !== '';
+            var isImageChanged = imageInput.classList.contains('image-input-changed');
+
+            submitButton.disabled = !(nameFilled && informationFilled && isImageChanged);
+        }
+
+        nameInput.addEventListener("input", checkRequiredFields);
+        informationInput.addEventListener("input", checkRequiredFields);
+
+        var observer = new MutationObserver(checkRequiredFields);
+        observer.observe(imageInput, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+
+        checkRequiredFields();
     });
 </script>

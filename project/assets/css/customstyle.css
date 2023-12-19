@@ -94,6 +94,29 @@
     background-color: #e2e3e5;
 }
 
+.custom-image {
+    float: left;
+    margin: 0 20px 10px 0;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 0.625rem;
+}
+
+.custom-paragraph {
+    text-align: justify;
+    text-indent: 2em;
+}
+
+.custom-image-roll {
+    width: 33.33%;
+    flex: 0 0 auto;
+}
+
+.custom-description-space {
+    min-height: 300px;
+}
+
 @media only screen and (max-width: 600px) {
     .customSpan {
         max-width: 150px;

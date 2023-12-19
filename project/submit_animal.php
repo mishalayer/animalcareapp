@@ -7,9 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contact_info = mysqli_real_escape_string($connection, $_POST['contact_info']);
     $description = mysqli_real_escape_string($connection, $_POST['description']);
     $owner_id = mysqli_real_escape_string($connection, $_POST['owner_id']);
+    $animal_type = mysqli_real_escape_string($connection, $_POST['animal_type']);
 
     // Insert data into animal table
-    $insertAnimalQuery = "INSERT INTO animaltable (name, contact_info, description, owner_id) VALUES ('$name', '$contact_info', '$description', '$owner_id')";
+    $insertAnimalQuery = "INSERT INTO animaltable (name, contact_info, description, owner_id, animal_type) VALUES ('$name', '$contact_info', '$description', '$owner_id', '$animal_type')";
     mysqli_query($connection, $insertAnimalQuery);
 
     $animalId = mysqli_insert_id($connection);
