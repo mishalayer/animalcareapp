@@ -47,6 +47,38 @@ if (isset($_GET['animal_id'])) {
             }
         }
     }
+    // Step 1: Query to get user IDs of patrons for the given animal
+    $patronQuery = "SELECT * FROM patrontable WHERE animal_id = $animal_id";
+    $patronResult = mysqli_query($connection, $patronQuery);
+
+    if ($patronResult) {
+        // Initialize an array to store patron data
+        $patronDataArray = [];
+
+        // Step 2: Loop through patrons and get user information
+        while ($patronData = mysqli_fetch_assoc($patronResult)) {
+            $patronUserId = $patronData['patron_id'];
+
+            // Query to get username from the 'users' table
+            $usernameQuery = "SELECT username FROM users WHERE id = $patronUserId";
+            $usernameResult = mysqli_query($connection, $usernameQuery);
+
+            if ($usernameResult && $usernameData = mysqli_fetch_assoc($usernameResult)) {
+                $patronData['username'] = $usernameData['username'];
+            }
+
+            // Query to get profile picture ('pict_name') from 'userpictures' table
+            $profilePictureQuery = "SELECT pict_name FROM userpictures WHERE user_id = $patronUserId";
+            $profilePictureResult = mysqli_query($connection, $profilePictureQuery);
+
+            if ($profilePictureResult && $profilePictureData = mysqli_fetch_assoc($profilePictureResult)) {
+                $patronData['profile_picture'] = 'images/person_images/' . $profilePictureData['pict_name'];
+            }
+
+            // Add patron data to the array
+            $patronDataArray[] = $patronData;
+        }
+    }
 }
 
 ?>
@@ -100,140 +132,36 @@ if (isset($_GET['animal_id'])) {
                         <!-- <a href="../../demo1/dist/pages/user-profile/overview.html" class="fw-semibold link-primary">Author’s Profile</a> -->
                     </div>
                 </div>
-                <div class="mb-5">
-                    <div class="text-center mb-12">
-                        <h3 class="fs-2hx text-dark mb-5">Our Great Team</h3>
-                        <div class="fs-5 text-muted fw-semibold">It’s no doubt that when a development takes longer to complete, additional costs to
-                            <br />integrate and test each extra feature creeps up and haunts most of us.
+                <?php
+                if (!empty($patronDataArray)) {
+                ?>
+                    <div class="mb-5">
+                        <div class="text-center mb-12">
+                            <h3 class="fs-2hx text-dark mb-5">Supporters</h3>
+                            <div class="fs-5 text-muted fw-semibold">Thanks to the great supporters!</div>
+                        </div>
+                        <div class="tns tns-default mb-10">
+                            <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000" data-tns-autoplay="true" data-tns-autoplay-timeout="18000" data-tns-controls="true" data-tns-nav="false" data-tns-items="1" data-tns-center="false" data-tns-dots="false" data-tns-prev-button="#kt_team_slider_prev" data-tns-next-button="#kt_team_slider_next" data-tns-responsive="{1200: {items: 3}, 992: {items: 2}}">
+                                <?php
+                                foreach ($patronDataArray as $patron) {
+                                    echo '<div class="text-center">';
+                                    echo '<div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url(\'' . $patron['profile_picture'] . '\')"></div>';
+                                    echo '<div class="mb-0">';
+                                    echo '<p class="text-dark fw-bold text-hover-primary fs-3">' . $patron['username'] . '</p>';
+                                    echo '</div>';
+                                    echo '</div>';
+                                }
+                                ?>
+                            </div>
+                            <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_prev">
+                                <i class="bi bi-caret-left-fill fs-1"></i>
+                            </button>
+                            <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_next">
+                                <i class="bi bi-caret-right-fill fs-1"></i>
+                            </button>
                         </div>
                     </div>
-                    <div class="tns tns-default mb-10">
-                        <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000" data-tns-autoplay="true" data-tns-autoplay-timeout="18000" data-tns-controls="true" data-tns-nav="false" data-tns-items="1" data-tns-center="false" data-tns-dots="false" data-tns-prev-button="#kt_team_slider_prev" data-tns-next-button="#kt_team_slider_next" data-tns-responsive="{1200: {items: 3}, 992: {items: 2}}">
-                            <!--begin::Item-->
-                            <div class="text-center">
-                                <!--begin::Photo-->
-                                <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('assets/media/avatars/300-1.jpg')"></div>
-                                <!--end::Photo-->
-                                <!--begin::Person-->
-                                <div class="mb-0">
-                                    <!--begin::Name-->
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-3">Paul Miles</a>
-                                    <!--end::Name-->
-                                    <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">Development Lead</div>
-                                    <!--begin::Position-->
-                                </div>
-                                <!--end::Person-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center">
-                                <!--begin::Photo-->
-                                <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('assets/media/avatars/300-2.jpg')"></div>
-                                <!--end::Photo-->
-                                <!--begin::Person-->
-                                <div class="mb-0">
-                                    <!--begin::Name-->
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-3">Melisa Marcus</a>
-                                    <!--end::Name-->
-                                    <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">Creative Director</div>
-                                    <!--begin::Position-->
-                                </div>
-                                <!--end::Person-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center">
-                                <!--begin::Photo-->
-                                <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('assets/media/avatars/300-5.jpg')"></div>
-                                <!--end::Photo-->
-                                <!--begin::Person-->
-                                <div class="mb-0">
-                                    <!--begin::Name-->
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-3">David Nilson</a>
-                                    <!--end::Name-->
-                                    <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">Python Expert</div>
-                                    <!--begin::Position-->
-                                </div>
-                                <!--end::Person-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center">
-                                <!--begin::Photo-->
-                                <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('assets/media/avatars/300-20.jpg')"></div>
-                                <!--end::Photo-->
-                                <!--begin::Person-->
-                                <div class="mb-0">
-                                    <!--begin::Name-->
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-3">Anne Clarc</a>
-                                    <!--end::Name-->
-                                    <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">Project Manager</div>
-                                    <!--begin::Position-->
-                                </div>
-                                <!--end::Person-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center">
-                                <!--begin::Photo-->
-                                <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('assets/media/avatars/300-23.jpg')"></div>
-                                <!--end::Photo-->
-                                <!--begin::Person-->
-                                <div class="mb-0">
-                                    <!--begin::Name-->
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-3">Ricky Hunt</a>
-                                    <!--end::Name-->
-                                    <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">Art Director</div>
-                                    <!--begin::Position-->
-                                </div>
-                                <!--end::Person-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center">
-                                <!--begin::Photo-->
-                                <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('assets/media/avatars/300-12.jpg')"></div>
-                                <!--end::Photo-->
-                                <!--begin::Person-->
-                                <div class="mb-0">
-                                    <!--begin::Name-->
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-3">Alice Wayde</a>
-                                    <!--end::Name-->
-                                    <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">Marketing Manager</div>
-                                    <!--begin::Position-->
-                                </div>
-                                <!--end::Person-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center">
-                                <!--begin::Photo-->
-                                <div class="octagon mx-auto mb-5 d-flex w-200px h-200px bgi-no-repeat bgi-size-contain bgi-position-center" style="background-image:url('assets/media/avatars/300-9.jpg')"></div>
-                                <!--end::Photo-->
-                                <!--begin::Person-->
-                                <div class="mb-0">
-                                    <!--begin::Name-->
-                                    <a href="#" class="text-dark fw-bold text-hover-primary fs-3">Carles Puyol</a>
-                                    <!--end::Name-->
-                                    <!--begin::Position-->
-                                    <div class="text-muted fs-6 fw-semibold mt-1">QA Managers</div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_prev">
-                            <i class="bi bi-caret-left-fill fs-1"></i>
-                        </button>
-                        <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_next">
-                            <i class="bi bi-caret-right-fill fs-1"></i>
-                        </button>
-                    </div>
-                </div>
+                <?php } ?>
                 <div class="m-0 px-lg-17 pb-lg-17 p-5">
                     <h1 class="fw-bold text-gray-800 mb-5 text-center">Payment Method</h1>
                     <div class="d-flex flex-equal gap-5 gap-xxl-9 px-0 mb-12" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
@@ -254,10 +182,36 @@ if (isset($_GET['animal_id'])) {
                         </label>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button class="btn btn-primary fs-1 w-75 py-4">Support</button>
+                        <button class="btn btn-primary fs-1 w-75 py-4" id="support-button">Support</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <script src="assets/plugins/custom/fslightbox/fslightbox.bundle.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("support-button").addEventListener("click", function() {
+                var userId = <?php echo json_encode($_SESSION['user_id']); ?>;
+
+                var animalId = <?php echo json_encode($_GET['animal_id']); ?>;
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("POST", "take_patronage.php", true);
+
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                    }
+                };
+                xhr.onerror = function() {
+                    console.error("Request failed");
+                };
+
+                xhr.send("userId=" + userId + "&animalId=" + animalId);
+            });
+        });
+    </script>

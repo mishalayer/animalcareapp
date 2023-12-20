@@ -20,7 +20,7 @@ $otherCategoryCount = $row['other_count'];
 <div id="kt_app_content" class="app-content flex-column-fluid">
     <div id="kt_app_content_container" class="app-container container-xxl">
         <div class="d-flex align-items-center gap-2 gap-lg-3 m-5 justify-content-end">
-            <a href="../../demo1/dist/apps/ecommerce/sales/listing.html" class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary"><i class="bi bi-sliders"></i>დამატებითი ფილტრაცია</a>
+            <!-- <a href="../../demo1/dist/apps/ecommerce/sales/listing.html" class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary"><i class="bi bi-sliders"></i>დამატებითი ფილტრაცია</a> -->
             <a href="?page=add_element" class="btn btn-sm fw-bold btn-primary">Add an animal</a>
         </div>
         <div class="d-flex flex-column flex-xl-row">
