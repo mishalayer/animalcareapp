@@ -25,7 +25,7 @@ if (!empty($_SESSION["loggedin"])) {
     <link href="animalcareapp/project/assets/css/customstyle.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body id="kt_body" class="app-blank">
+<body id="kt_body" class="app-blank pattern-overlay">
     <script>
         var defaultThemeMode = "light";
         var themeMode;
@@ -56,7 +56,7 @@ if (!empty($_SESSION["loggedin"])) {
             }
         </style>
         <div class="d-flex justify-content-center">
-            <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
+            <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10 my-12">
                 <div class="d-flex flex-center flex-column flex-lg-row-fluid">
                     <div class="w-lg-500px p-10">
                         <form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="../../demo1/dist/authentication/layouts/corporate/sign-in.html" action="#" method="POST">

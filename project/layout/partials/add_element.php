@@ -92,7 +92,7 @@
                                             <option value="other" selected="selected">სხვა</option>
                                             <option value="dog">ძაღლი</option>
                                             <option value="cat">კატა</option>
-                                            <option value="parrot">თუთიუში</option>
+                                            <option value="parrot">თუთიყუში</option>
                                         </select>
                                         <div class="text-muted fs-7">აირჩიეთ ცხოველის ტიპი.</div>
                                     </div>

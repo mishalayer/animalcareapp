@@ -32,7 +32,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 ?>
     <div class="card card-flush flex-row-fluid p-6 pb-5 mw-23">
         <div class="card-body text-center">
-            <img src="images/animal_images/<?php echo $thumbnailImage; ?>" class="rounded-3 mb-4 w-150px h-150px w-xxl-200px h-xxl-200px" alt="" />
+            <img src="images/animal_images/<?php echo $thumbnailImage; ?>" class="rounded-3 mb-4 w-150px h-150px w-xxl-200px h-xxl-200px" style="object-fit: cover;" alt="" />
             <div class="mb-2">
                 <div class="text-center">
                     <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1"><?php echo $animalName; ?></span>

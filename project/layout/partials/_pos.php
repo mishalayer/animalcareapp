@@ -1,11 +1,11 @@
 <?php
 include "database.php";
 $query = "SELECT
-    COUNT(*) AS total,
-    SUM(CASE WHEN animal_type = 'dog' THEN 1 ELSE 0 END) AS dog_count,
-    SUM(CASE WHEN animal_type = 'cat' THEN 1 ELSE 0 END) AS cat_count,
-    SUM(CASE WHEN animal_type = 'parrot' THEN 1 ELSE 0 END) AS parrot_count,
-    SUM(CASE WHEN animal_type = 'other' THEN 1 ELSE 0 END) AS other_count
+COALESCE(COUNT(*), 0) AS total,
+COALESCE(SUM(CASE WHEN animal_type = 'dog' THEN 1 ELSE 0 END), 0) AS dog_count,
+COALESCE(SUM(CASE WHEN animal_type = 'cat' THEN 1 ELSE 0 END), 0) AS cat_count,
+COALESCE(SUM(CASE WHEN animal_type = 'parrot' THEN 1 ELSE 0 END), 0) AS parrot_count,
+COALESCE(SUM(CASE WHEN animal_type = 'other' THEN 1 ELSE 0 END), 0) AS other_count
 FROM animaltable;";
 $result = mysqli_query($connection, $query);
 $row = mysqli_fetch_assoc($result);
@@ -78,7 +78,7 @@ $otherCategoryCount = $row['other_count'];
                                         <img src="images/custom_images/OtherAnimals.png" class="w-80px" alt="" />
                                     </div>
                                     <div class="">
-                                        <span class="fw-bold fs-2 d-block text-black">Other</span>
+                                        <span class="fw-bold fs-2 d-block text-black">სხვა</span>
                                         <span class="fw-semibold fs-7 text-black"><?php echo $otherCategoryCount ?> შედეგი</span>
                                     </div>
                                 </a>

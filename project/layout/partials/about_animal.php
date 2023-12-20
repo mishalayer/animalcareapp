@@ -134,7 +134,7 @@ if (isset($_GET['animal_id'])) {
                         <div class="text-center mb-5">
                             <h1 class="text-dark mb-5">საკონტაქტო ინფორმაცია</h1>
                         </div>
-                        <div class="text-muted fw-semibold lh-lg mb-2"><?php echo $contact_info ?></div>
+                        <div class="text-muted text-center fw-semibold lh-lg mb-2"><?php echo $contact_info ?></div>
                         <!-- <a href="../../demo1/dist/pages/user-profile/overview.html" class="fw-semibold link-primary">Author’s Profile</a> -->
                     </div>
                 </div>

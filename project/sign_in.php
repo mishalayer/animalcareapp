@@ -27,7 +27,7 @@ if (!empty($_SESSION["loggedin"])) {
     <link href="animalcareapp/project/assets/css/customstyle.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body id="kt_body" class="app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center">
+<body id="kt_body" class="app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center pattern-overlay">
     <script>
         var defaultThemeMode = "light";
         var themeMode;

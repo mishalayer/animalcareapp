@@ -37,7 +37,7 @@ if (isset($_GET['page']) && $_GET['page'] === 'structure' && $_SESSION["privileg
     </script>
 </head>
 
-<body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" class="app-default">
+<body class="pattern-overlay" id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" class="app-default">
     <?php include 'partials/theme-mode/_init.php' ?>
     <?php include 'layout/_default.php' ?>
     <?php include 'partials/_scrolltop.php' ?>
