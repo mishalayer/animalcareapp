@@ -104,7 +104,6 @@
 }
 
 .custom-paragraph {
-    text-align: justify;
     text-indent: 2em;
 }
 
@@ -115,6 +114,17 @@
 
 .custom-description-space {
     min-height: 300px;
+}
+
+.custom-header {
+    margin: 0px !important;
+}
+
+.custom-return-button {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    height: 50px;
 }
 
 @media only screen and (max-width: 600px) {

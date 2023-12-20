@@ -9,6 +9,7 @@ if (isset($_GET['animal_id'])) {
 
     if ($animalResult) {
         $animalData = mysqli_fetch_assoc($animalResult);
+        $animal_name = $animalData['name'];
         $description = $animalData['description'];
         $contact_info = $animalData['contact_info'];
         $owner_id = $animalData['owner_id'];
@@ -47,19 +48,15 @@ if (isset($_GET['animal_id'])) {
             }
         }
     }
-    // Step 1: Query to get user IDs of patrons for the given animal
     $patronQuery = "SELECT * FROM patrontable WHERE animal_id = $animal_id";
     $patronResult = mysqli_query($connection, $patronQuery);
 
     if ($patronResult) {
-        // Initialize an array to store patron data
         $patronDataArray = [];
 
-        // Step 2: Loop through patrons and get user information
         while ($patronData = mysqli_fetch_assoc($patronResult)) {
             $patronUserId = $patronData['patron_id'];
 
-            // Query to get username from the 'users' table
             $usernameQuery = "SELECT username FROM users WHERE id = $patronUserId";
             $usernameResult = mysqli_query($connection, $usernameQuery);
 
@@ -67,15 +64,18 @@ if (isset($_GET['animal_id'])) {
                 $patronData['username'] = $usernameData['username'];
             }
 
-            // Query to get profile picture ('pict_name') from 'userpictures' table
             $profilePictureQuery = "SELECT pict_name FROM userpictures WHERE user_id = $patronUserId";
             $profilePictureResult = mysqli_query($connection, $profilePictureQuery);
 
-            if ($profilePictureResult && $profilePictureData = mysqli_fetch_assoc($profilePictureResult)) {
-                $patronData['profile_picture'] = 'images/person_images/' . $profilePictureData['pict_name'];
+            if ($profilePictureResult) {
+                if (mysqli_num_rows($profilePictureResult) > 0) {
+                    $profilePictureData = mysqli_fetch_assoc($profilePictureResult);
+                    $patronData['profile_picture'] = 'images/person_images/' . $profilePictureData['pict_name'];
+                } else {
+                    $patronData['profile_picture'] = 'images/person_images/defaultprofile.png';
+                }
             }
 
-            // Add patron data to the array
             $patronDataArray[] = $patronData;
         }
     }
@@ -86,9 +86,14 @@ if (isset($_GET['animal_id'])) {
 <div id="kt_app_content" class="app-content flex-column-fluid">
     <div id="kt_app_content_container" class="app-container container-xxl">
         <div class="card">
+            <a href="?page=index">
+                <button class="btn btn-light p-4 custom-return-button btn-square">
+                    <i class="bi bi-arrow-return-left fs-1"></i>
+                </button>
+            </a>
             <div class="card-body px-lg-17 pt-lg-17 pb-lg-3">
                 <div class="text-center mb-5">
-                    <h3 class="fs-2hx text-dark mb-5">About Us</h3>
+                    <h3 class="fs-2hx text-dark mb-5"><?php echo $animal_name ?>ს შესახებ</h3>
                 </div>
 
                 <?php if (isset($thumbnailURL)) : ?>
@@ -102,12 +107,13 @@ if (isset($_GET['animal_id'])) {
 
                 <?php if (!empty($imageURLs)) : ?>
                     <div class="mb-16">
+                        <h1 class="fw-bold text-gray-800 mb-10 text-center">გალერეა</h1>
                         <div class="d-flex justify-content-center g-10">
                             <?php foreach ($imageURLs as $imageURL) : ?>
                                 <div class="custom-image-roll">
                                     <div class="card-xl-stretch mx-md-3">
-                                        <a class="d-block overlay mb-4" data-fslightbox="lightbox-hot-sales" href="<?php echo $imageURL; ?>">
-                                            <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-300px" style="background-image:url('<?php echo $imageURL; ?>')"></div>
+                                        <a class="d-block overlay mb-4 d-flex justify-content-center" data-fslightbox="lightbox-hot-sales" href="<?php echo $imageURL; ?>">
+                                            <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-250px" style="background-image:url('<?php echo $imageURL; ?>'); width: 80%;"></div>
                                         </a>
                                     </div>
                                 </div>
@@ -126,7 +132,7 @@ if (isset($_GET['animal_id'])) {
                     </div>
                     <div class="mb-0 fs-6 w-100">
                         <div class="text-center mb-5">
-                            <h1 class="text-dark mb-5">Contact information</h1>
+                            <h1 class="text-dark mb-5">საკონტაქტო ინფორმაცია</h1>
                         </div>
                         <div class="text-muted fw-semibold lh-lg mb-2"><?php echo $contact_info ?></div>
                         <!-- <a href="../../demo1/dist/pages/user-profile/overview.html" class="fw-semibold link-primary">Author’s Profile</a> -->
@@ -137,8 +143,8 @@ if (isset($_GET['animal_id'])) {
                 ?>
                     <div class="mb-5">
                         <div class="text-center mb-12">
-                            <h3 class="fs-2hx text-dark mb-5">Supporters</h3>
-                            <div class="fs-5 text-muted fw-semibold">Thanks to the great supporters!</div>
+                            <h3 class="fs-2hx text-dark mb-5">მეურვეები:</h3>
+                            <div class="fs-5 text-muted fw-semibold">უღრმესი მადლობა რომ ეხმარებით <?php echo $animal_name; ?>ს!</div>
                         </div>
                         <div class="tns tns-default mb-10">
                             <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000" data-tns-autoplay="true" data-tns-autoplay-timeout="18000" data-tns-controls="true" data-tns-nav="false" data-tns-items="1" data-tns-center="false" data-tns-dots="false" data-tns-prev-button="#kt_team_slider_prev" data-tns-next-button="#kt_team_slider_next" data-tns-responsive="{1200: {items: 3}, 992: {items: 2}}">
@@ -163,26 +169,21 @@ if (isset($_GET['animal_id'])) {
                     </div>
                 <?php } ?>
                 <div class="m-0 px-lg-17 pb-lg-17 p-5">
-                    <h1 class="fw-bold text-gray-800 mb-5 text-center">Payment Method</h1>
+                    <h1 class="fw-bold text-gray-800 mb-5 text-center">გადახდის მეთოდი</h1>
                     <div class="d-flex flex-equal gap-5 gap-xxl-9 px-0 mb-12" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]">
                         <label class="btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-3 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4" data-kt-button="true">
                             <input class="btn-check" type="radio" name="method" value="0" />
                             <i class="bi bi-cash fs-1"></i>
-                            <span class="fs-7 fw-bold d-block">Cash</span>
+                            <span class="fs-7 fw-bold d-block">ქეშით</span>
                         </label>
                         <label class="btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-3 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4 active" data-kt-button="true">
                             <input class="btn-check" type="radio" name="method" value="1" />
                             <i class="bi bi-credit-card fs-1"></i>
-                            <span class="fs-7 fw-bold d-block">Card</span>
-                        </label>
-                        <label class="btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-3 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4" data-kt-button="true">
-                            <input class="btn-check" type="radio" name="method" value="2" />
-                            <i class="bi bi-paypal fs-1"></i>
-                            <span class="fs-7 fw-bold d-block">E-Wallet</span>
+                            <span class="fs-7 fw-bold d-block">ბარათით</span>
                         </label>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button class="btn btn-primary fs-1 w-75 py-4" id="support-button">Support</button>
+                        <button class="btn btn-primary fs-1 fw-bold w-75 py-4" id="support-button">გახდი მეურვე</button>
                     </div>
                 </div>
             </div>

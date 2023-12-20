@@ -13,8 +13,8 @@ var KTSigninGeneral = function () {
                     'username': {
                         validators: {
                             regexp: {
-                                regexp: /^[a-zA-Z0-9]+$/,
-                                message: 'მომხმარებლის სახელი არ უნდა შეიცავდეს სიმბოლოებს',
+                                regexp: /^[a-zA-Z0-9ა-ჰ_]+$/,
+                                message: 'მომხმარებლის სახელი არ უნდა შეიცავდეს სიმბოლოებს!',
                             },
                             notEmpty: {
                                 message: 'მომხმარებლის სახელი სავალდებულოა!'

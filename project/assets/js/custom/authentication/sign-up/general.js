@@ -16,18 +16,22 @@ var KTSignupGeneral = function () {
                 fields: {
                     'username': {
                         validators: {
+                            regexp: {
+                                regexp: /^[a-zA-Z0-9ა-ჰ_]+$/,
+                                message: 'მომხმარებლის სახელი არ უნდა შეიცავდეს სიმბოლოებს!',
+                            },
                             notEmpty: {
-                                message: 'Username is required'
+                                message: 'მომხმარებლის სახელი სავალდებულოა!'
                             }
                         }
                     },
                     'password': {
                         validators: {
                             notEmpty: {
-                                message: 'The password is required'
+                                message: 'პაროლის შეყვანა სავალდებულოა!'
                             },
                             callback: {
-                                message: 'Please enter a valid password',
+                                message: 'გთხოვთ შეიყვანოთ ვალიდური პაროლი!',
                                 callback: function (input) {
                                     if (input.value.length > 0) {
                                         return validatePassword();
@@ -39,13 +43,13 @@ var KTSignupGeneral = function () {
                     'confirm-password': {
                         validators: {
                             notEmpty: {
-                                message: 'The password confirmation is required'
+                                message: 'პაროლის დადასტურება სავალდებულოა!'
                             },
                             identical: {
                                 compare: function () {
                                     return form.querySelector('[name="password"]').value;
                                 },
-                                message: 'The password and its confirm are not the same'
+                                message: 'პაროლები არ ემთხვევა ერთმანეთს!'
                             }
                         }
                     }
@@ -114,7 +118,7 @@ var KTSignupGeneral = function () {
                                     text: response.data.message,
                                     icon: "error",
                                     buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
+                                    confirmButtonText: "ფანჯრის დახურვა",
                                     customClass: {
                                         confirmButton: "btn btn-primary"
                                     }
@@ -127,10 +131,10 @@ var KTSignupGeneral = function () {
                 } else {
                     // Show error popup
                     Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "დაფიქსირდა შეცდომა, ბოდიშს გიხდით.",
                         icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "ფანჯრის დახურვა",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }

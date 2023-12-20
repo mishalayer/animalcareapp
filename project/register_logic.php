@@ -7,7 +7,6 @@ if ($data !== null) {
     $username = mysqli_real_escape_string($connection, $data['username']);
     $password = mysqli_real_escape_string($connection, $data['password']);
 
-    // Check if the username already exists
     $checkQuery = "SELECT * FROM users WHERE username = '$username'";
     $checkResult = mysqli_query($connection, $checkQuery);
 
@@ -15,19 +14,18 @@ if ($data !== null) {
         if (mysqli_num_rows($checkResult) > 0) {
             $response = array('status' => 'error', 'message' => 'Username already exists');
         } else {
-            // Insert user into the database
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $insertQuery = "INSERT INTO users (username, password) VALUES ('$username', '$hashedPassword')";
             $insertResult = mysqli_query($connection, $insertQuery);
 
             if ($insertResult) {
-                $response = array('status' => 'success', 'message' => 'Registration successful', 'redirect' => 'animalcareapp/project/sign_in.php');
+                $response = array('status' => 'success', 'message' => 'თქვენ წარმატებით გაიარეთ რეგისტრაცია', 'redirect' => 'animalcareapp/project/sign_in.php');
             } else {
-                $response = array('status' => 'error', 'message' => 'Registration failed: ' . mysqli_error($connection));
+                $response = array('status' => 'error', 'message' => 'რეგისტრაცია წარუმატებელია: ' . mysqli_error($connection));
             }
         }
     } else {
-        $response = array('status' => 'error', 'message' => 'Error executing check query: ' . mysqli_error($connection));
+        $response = array('status' => 'error', 'message' => 'მონაცემთა ბაზის შეცდომა: ' . mysqli_error($connection));
     }
 } else {
     $response = array('status' => 'error', 'message' => 'Invalid JSON data');

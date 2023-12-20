@@ -2,10 +2,16 @@
     <div id="kt_app_content_container" class="app-container container-xxl">
         <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row" data-kt-redirect="../../demo1/dist/apps/ecommerce/catalog/products.html">
             <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
-                <div class="card card-flush py-4">
+
+                <div class="card card-flush pb-4 pt-1">
+                    <a href="?page=index">
+                        <button class="btn btn-light p-4 custom-return-button btn-square">
+                            <i class="bi bi-arrow-return-left fs-1"></i>
+                        </button>
+                    </a>
                     <div class="card-header">
-                        <div class="card-title">
-                            <h2>Main image</h2>
+                        <div class="card-title ps-20">
+                            <h2>მთავარი სურათი</h2>
                         </div>
                     </div>
                     <div class="card-body text-center pt-0">
@@ -32,7 +38,7 @@
                                 <i class="bi bi-x fs-2"></i>
                             </span>
                         </div>
-                        <div class="text-muted fs-7">Set the animal's main image. Only *.png, *.jpg and *.jpeg image files are accepted</div>
+                        <div class="text-muted fs-7">აირჩიეთ მთავარი სურათი. მიიღება *.png, *.jpg ან *.jpeg გაფართოების ფაილი</div>
                     </div>
                 </div>
                 <div class="card card-flush py-4">
@@ -47,13 +53,13 @@
                                 <div class="dz-message needsclick">
                                     <i class="bi bi-upload text-primary" style="font-size: 3rem;"></i>
                                     <div class="ms-4">
-                                        <h3 class="fs-5 fw-bold text-gray-900 mb-1">Drop files here or click to upload.</h3>
-                                        <span class="fs-7 fw-semibold text-gray-400">Upload up to 3 files</span>
+                                        <h3 class="fs-5 fw-bold text-gray-900 mb-1">აირჩიეთ ან გადმოქაჩეთ სურათი.</h3>
+                                        <span class="fs-7 fw-semibold text-gray-400">შესაძლებელია 3 სურათამდე ატვირთვა</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-muted fs-7">Set the product media gallery.</div>
+                        <div class="text-muted fs-7">ატვირთეთ სურათები გალერეაში</div>
                     </div>
                 </div>
             </div>
@@ -64,38 +70,38 @@
                             <div class="card card-flush py-4">
                                 <div class="card-header">
                                     <div class="card-title">
-                                        <h2>General</h2>
+                                        <h2>ინფორმაცია</h2>
                                     </div>
                                 </div>
                                 <div class="card-body pt-0">
                                     <div class="mb-8 fv-row">
-                                        <label class="required form-label">Animal's Name</label>
-                                        <input type="text" name="name" class="form-control mb-2" placeholder="Animal's name" value="" />
-                                        <div class="text-muted fs-7">The animals name is required.</div>
+                                        <label class="required form-label">ცხოველის სახელი</label>
+                                        <input type="text" name="name" class="form-control mb-2" placeholder="ცხოველის სახელი, მაგალითად: ბინი, მაქსი, სინდი" value="" />
+                                        <div class="text-muted fs-7">ცხოველის სახელი სავალდებულოა.</div>
                                     </div>
 
                                     <div class="mb-8 fv-row">
-                                        <label class="required form-label">Information</label>
+                                        <label class="required form-label">საკონტაქტო ინფორმაცია</label>
                                         <input type="text" name="contact_info" class="form-control mb-2" placeholder="საკონტაქტო ინფორმაცია, მაგალითად: ტელეფონი, ადგილმდებარეობა" value="" />
-                                        <div class="text-muted fs-7">The information is required.</div>
+                                        <div class="text-muted fs-7">საკონტაქტო ინფორმაცია სავალდებულოა.</div>
                                     </div>
                                     <div class="mb-8 fv-row">
-                                        <label class="required form-label">Animal type</label>
+                                        <label class="required form-label">ცხოველის სახეობა</label>
                                         <select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select an option" name="animal_type" id="add_element_animal_type">
                                             <option></option>
-                                            <option value="other" selected="selected">Other</option>
-                                            <option value="dog">Dog</option>
-                                            <option value="cat">Cat</option>
-                                            <option value="parrot">Parrot</option>
+                                            <option value="other" selected="selected">სხვა</option>
+                                            <option value="dog">ძაღლი</option>
+                                            <option value="cat">კატა</option>
+                                            <option value="parrot">თუთიუში</option>
                                         </select>
-                                        <div class="text-muted fs-7">Choose animal type.</div>
+                                        <div class="text-muted fs-7">აირჩიეთ ცხოველის ტიპი.</div>
                                     </div>
                                     <div>
-                                        <label class="form-label">Description</label>
+                                        <label class="form-label">ცხოველის აღწერა</label>
                                         <div class="mb-2">
-                                            <textarea name="description" class="form-control" id="query" style="height: 150px;" placeholder="Add a description"></textarea>
+                                            <textarea name="description" class="form-control" id="query" style="height: 111px;" placeholder="ცხოველის აღწერა, მაგალითად: ბინი, 2 წლის, მამრობითი სქესის, აცრილია, უყვარს ბურთთან თამაში, არის უსაყვარლესი ძაღლი"></textarea>
                                         </div>
-                                        <div class="text-muted fs-7">Set a description to the product for better visibility.</div>
+                                        <div class="text-muted fs-7">მიუთითეთ ნებისმიერი ინფორმაცია ცხოველის შესახებ.</div>
                                     </div>
                                 </div>
                             </div>
@@ -103,10 +109,10 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <a href="?page=pos" class="btn btn-light me-5">Cancel</a>
+                    <a href="?page=pos" class="btn btn-light me-5">გაუქმება</a>
                     <button type="submit" id="submit_animal_button" class="btn btn-primary">
-                        <span class="indicator-label">Submit</span>
-                        <span class="indicator-progress">Please wait...
+                        <span class="indicator-label">განთავსება</span>
+                        <span class="indicator-progress">გთხოვთ დაელოდოთ...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
                 </div>
@@ -117,41 +123,25 @@
 <script src="assets/plugins/global/plugins.bundle.js"></script>
 <script src="assets/js/scripts.bundle.js"></script>
 <script>
-    Dropzone.autoDiscover = false;
-
-    var myDropzone = new Dropzone("#animal_dropzone", {
-        url: "upload_animal_images.php",
-        maxFiles: 3,
-        acceptedFiles: "image/*",
-        addRemoveLinks: true,
-        autoProcessQueue: false,
-    });
-
     document.querySelector("#submit_animal_button").addEventListener("click", function(event) {
         event.preventDefault();
 
-        // Create FormData object
         var formData = new FormData(document.getElementById("kt_ecommerce_add_product_form"));
 
-        // Append user_id to form data
         formData.append("owner_id", <?php echo $_SESSION['user_id']; ?>);
 
-        // Find the main image element
         var mainImageInput = document.querySelector('[name="avatar"]');
 
-        // Append the "Main image" input to FormData
         if (mainImageInput.files.length > 0) {
             formData.append('file[]', mainImageInput.files[0]);
-            formData.append('is_thumbnail[]', 1); // Set is_thumbnail to 1 for the main image
+            formData.append('is_thumbnail[]', 1);
         }
 
-        // Append thumbnail indicator for the dropzone images
         myDropzone.files.forEach(function(file) {
             formData.append('file[]', file);
-            formData.append('is_thumbnail[]', 0); // Set is_thumbnail to 0 for regular images
+            formData.append('is_thumbnail[]', 0);
         });
 
-        // Send formData to server using Fetch API
         fetch('submit_animal.php', {
                 method: 'POST',
                 body: formData,
@@ -159,7 +149,6 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                // Handle the response from the server
             })
             .catch(error => {
                 console.error("Error submitting form:", error);
@@ -191,5 +180,23 @@
         });
 
         checkRequiredFields();
+    });
+</script>
+<script>
+    Dropzone.autoDiscover = false;
+
+    var myDropzone = new Dropzone("#animal_dropzone", {
+        url: "upload_animal_images.php",
+        maxFiles: 3,
+        acceptedFiles: "image/*",
+        addRemoveLinks: true,
+        autoProcessQueue: false,
+    });
+
+    myDropzone.on("addedfile", function(file) {
+        if (myDropzone.files.length > myDropzone.options.maxFiles) {
+            var removedFile = myDropzone.files[0];
+            myDropzone.removeFile(removedFile);
+        }
     });
 </script>

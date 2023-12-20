@@ -1,17 +1,14 @@
 <?php
 include "database.php";
 
-// Function to truncate text to a specified number of words
 function truncateText($text, $numWords)
 {
     $words = explode(' ', $text);
     return implode(' ', array_slice($words, 0, $numWords));
 }
 
-// Get the selected category from POST data
 $category = isset($_POST['category']) ? $_POST['category'] : 'all';
 
-// Prepare the SQL query based on the selected category
 if ($category == 'all') {
     $sql = "SELECT a.*, ap.pict_name
             FROM animaltable a
@@ -26,7 +23,6 @@ if ($category == 'all') {
 
 $result = mysqli_query($connection, $sql);
 
-// Generate HTML content for the selected category
 ob_start();
 while ($row = mysqli_fetch_assoc($result)) {
     $animalId = $row['animal_id'];
@@ -43,7 +39,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <span class="text-gray-400 fw-semibold d-block fs-6 mt-n1 custom-span"><?php echo $description; ?></span>
                 </div>
             </div>
-            <a href="index.php?page=about_animal&animal_id=<?php echo $animalId; ?>" class="btn btn-primary">About</a>
+            <a href="index.php?page=about_animal&animal_id=<?php echo $animalId; ?>" class="btn btn-primary fw-bold">დეტალურად</a>
         </div>
     </div>
 <?php

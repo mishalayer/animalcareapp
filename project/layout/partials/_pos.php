@@ -21,7 +21,7 @@ $otherCategoryCount = $row['other_count'];
     <div id="kt_app_content_container" class="app-container container-xxl">
         <div class="d-flex align-items-center gap-2 gap-lg-3 m-5 justify-content-end">
             <!-- <a href="../../demo1/dist/apps/ecommerce/sales/listing.html" class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary"><i class="bi bi-sliders"></i>დამატებითი ფილტრაცია</a> -->
-            <a href="?page=add_element" class="btn btn-sm fw-bold btn-primary">Add an animal</a>
+            <a href="?page=add_element" class="btn btn-sm fw-bold btn-primary">ცხოველის დამატება</a>
         </div>
         <div class="d-flex flex-column flex-xl-row">
             <div class="d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">
@@ -34,8 +34,8 @@ $otherCategoryCount = $row['other_count'];
                                         <img src="images/custom_images/AllAnimals.png" class="w-80px" alt="" />
                                     </div>
                                     <div class="">
-                                        <span class="fw-bold fs-2 d-block text-black">All Animals</span>
-                                        <span class="fw-semibold fs-7 text-black"><?php echo $allCategoryCount ?> results</span>
+                                        <span class="fw-bold fs-2 d-block text-black">საერთო</span>
+                                        <span class="fw-semibold fs-7 text-black"><?php echo $allCategoryCount ?> შედეგი</span>
                                     </div>
                                 </a>
                             </li>
@@ -45,8 +45,8 @@ $otherCategoryCount = $row['other_count'];
                                         <img src="images/custom_images/Dogs.png" class="w-80px" alt="" />
                                     </div>
                                     <div class="">
-                                        <span class="fw-bold fs-2 d-block text-black">Dogs</span>
-                                        <span class="fw-semibold fs-7 text-black"><?php echo $dogCategoryCount ?> dogs</span>
+                                        <span class="fw-bold fs-2 d-block text-black">ძაღლები</span>
+                                        <span class="fw-semibold fs-7 text-black"><?php echo $dogCategoryCount ?> ძაღლი</span>
                                     </div>
                                 </a>
                             </li>
@@ -56,8 +56,8 @@ $otherCategoryCount = $row['other_count'];
                                         <img src="images/custom_images/Cats.png" class="w-80px" alt="" />
                                     </div>
                                     <div class="">
-                                        <span class="fw-bold fs-2 d-block text-black">Cats</span>
-                                        <span class="fw-semibold fs-7 text-black"><?php echo $catCategoryCount ?> cats</span>
+                                        <span class="fw-bold fs-2 d-block text-black">კატები</span>
+                                        <span class="fw-semibold fs-7 text-black"><?php echo $catCategoryCount ?> კატა</span>
                                     </div>
                                 </a>
                             </li>
@@ -67,8 +67,8 @@ $otherCategoryCount = $row['other_count'];
                                         <img src="images/custom_images/Parrots.png" class="w-80px" alt="" />
                                     </div>
                                     <div class="">
-                                        <span class="fw-bold fs-2 d-block text-black">Parrots</span>
-                                        <span class="fw-semibold fs-7 text-black"><?php echo $parrotCategoryCount ?> parrots</span>
+                                        <span class="fw-bold fs-2 d-block text-black">თუთიყუშები</span>
+                                        <span class="fw-semibold fs-7 text-black"><?php echo $parrotCategoryCount ?> თუთიყუში</span>
                                     </div>
                                 </a>
                             </li>
@@ -79,7 +79,7 @@ $otherCategoryCount = $row['other_count'];
                                     </div>
                                     <div class="">
                                         <span class="fw-bold fs-2 d-block text-black">Other</span>
-                                        <span class="fw-semibold fs-7 text-black"><?php echo $otherCategoryCount ?> results</span>
+                                        <span class="fw-semibold fs-7 text-black"><?php echo $otherCategoryCount ?> შედეგი</span>
                                     </div>
                                 </a>
                             </li>
@@ -96,35 +96,28 @@ $otherCategoryCount = $row['other_count'];
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Function to handle category clicks
             function loadCategoryContent(category) {
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "load_category.php", true);
                 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
-                        // Update the content in the tab-pane dynamically
                         document.getElementById("animalContent").innerHTML = xhr.responseText;
                     }
                 };
 
-                // Send the category as data
                 xhr.send("category=" + category);
             }
 
-            // Automatically load content for "All Animals" on page load
             loadCategoryContent('all');
 
-            // Function to handle category clicks
             var categoryLinks = document.querySelectorAll(".custom-category-card a");
             categoryLinks.forEach(function(link) {
                 link.addEventListener("click", function(e) {
                     e.preventDefault();
 
-                    // Get the category from the href attribute
                     var category = this.getAttribute("href").replace("#category_", "");
 
-                    // Load content for the selected category
                     loadCategoryContent(category);
                 });
             });
