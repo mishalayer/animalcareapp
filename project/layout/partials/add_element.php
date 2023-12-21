@@ -1,8 +1,7 @@
 <div id="kt_app_content" class="app-content flex-column-fluid">
     <div id="kt_app_content_container" class="app-container container-xxl">
-        <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row" data-kt-redirect="../../demo1/dist/apps/ecommerce/catalog/products.html">
+        <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row">
             <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
-
                 <div class="card card-flush pb-4 pt-1">
                     <a href="?page=index">
                         <button class="btn btn-light p-4 custom-return-button btn-square">
@@ -149,6 +148,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                window.location.href = '?page=index';
             })
             .catch(error => {
                 console.error("Error submitting form:", error);

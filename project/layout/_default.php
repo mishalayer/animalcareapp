@@ -16,7 +16,9 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                         include 'layout/partials/account_settings.php';
                     } else if ($page == 'about_animal') {
                         include 'layout/partials/about_animal.php';
-                    } else {
+                    } else if ($page == 'logs' AND $_SESSION['privilege'] == 2) {
+                        include 'layout/partials/_logs.php';
+                    }else {
                         include 'layout/partials/_pos.php';
                     }
                     ?>

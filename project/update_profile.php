@@ -55,6 +55,8 @@ if (isset($_POST['submit']) && $_POST['submit'] == 1) {
 
         mysqli_commit($connection);
 
+        $logs_query = "INSERT INTO logs (object, action, initiator) VALUES ('" . $_SESSION['username'] . "', 'პროფილის განახლება', '" . $_SESSION['username'] ."');";
+        mysqli_query($connection, $logs_query);
         $response = ['status' => 'success', 'message' => 'Profile updated successfully'];
     } catch (Exception $e) {
         mysqli_rollback($connection);

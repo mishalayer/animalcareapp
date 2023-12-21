@@ -12,6 +12,13 @@ if (!isset($_SESSION['user_id'])) {
 $userId = $_SESSION['user_id'];
 
 $animalId = $_POST['animalId'];
+$animalQuery = "SELECT name FROM animaltable WHERE animal_id = $animalId";
+$animalResult = mysqli_query($connection, $animalQuery);
+
+if ($animalResult) {
+    $animalData = mysqli_fetch_assoc($animalResult);
+    $name = $animalData['name'];
+}
 
 if (!ctype_digit($animalId) || $animalId <= 0) {
     http_response_code(400);
@@ -31,6 +38,8 @@ if ($checkPatronageResult && mysqli_num_rows($checkPatronageResult) > 0) {
 $insertPatronageQuery = "INSERT INTO patrontable (animal_id, patron_id) VALUES ($animalId, $userId)";
 
 if (mysqli_query($connection, $insertPatronageQuery)) {
+    $logs_query = "INSERT INTO logs (object, action, initiator) VALUES ('" . "ცხოველის ID=" . $animalId . " " . $name . "', 'მეურვეობის აღება', '" . $_SESSION['username'] ."');";
+    mysqli_query($connection, $logs_query);
     http_response_code(200);
     echo "Patronage information added successfully";
 } else {

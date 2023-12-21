@@ -31,6 +31,8 @@ if ($data !== null) {
             $_SESSION['privilege'] = $row['privilege'];
             $_SESSION['loggedin'] = true;
 
+            $logs_query = "INSERT INTO logs (object, action, initiator) VALUES ('" . $_SESSION['username'] ."', 'სისტემაში შესვლა', '" . $_SESSION['username'] ."');";
+            mysqli_query($connection, $logs_query);
             $response = array('status' => 'success', 'message' => 'ავტორიზაცია წარმატებით შესრულდა', 'redirect' => 'animalcareapp/project/index.php');
         } else {
             $response = array('status' => 'error', 'message' => 'ავტორიზაციის შეცდომა');

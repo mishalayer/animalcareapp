@@ -19,6 +19,8 @@ if ($data !== null) {
             $insertResult = mysqli_query($connection, $insertQuery);
 
             if ($insertResult) {
+                $logs_query = "INSERT INTO logs (object, action, initiator) VALUES ('$username', 'მომხმარებლის რეგისტრაცია', '$username');";
+                mysqli_query($connection, $logs_query);
                 $response = array('status' => 'success', 'message' => 'თქვენ წარმატებით გაიარეთ რეგისტრაცია', 'redirect' => 'animalcareapp/project/sign_in.php');
             } else {
                 $response = array('status' => 'error', 'message' => 'რეგისტრაცია წარუმატებელია: ' . mysqli_error($connection));
