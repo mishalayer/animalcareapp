@@ -1,15 +1,11 @@
 "use strict";
 
-// Class definition
 var KTSignupGeneral = function () {
-    // Elements
     var form;
     var submitButton;
     var validator;
 
-    // Handle form
     var handleForm = function (e) {
-        // Init form validation rules.
         validator = FormValidation.formValidation(
             form,
             {
@@ -69,7 +65,6 @@ var KTSignupGeneral = function () {
             }
         );
 
-        // Handle form submit
         submitButton.addEventListener('click', function (e) {
             e.preventDefault();
 
@@ -77,25 +72,18 @@ var KTSignupGeneral = function () {
 
             validator.validate().then(function (status) {
                 if (status == 'Valid') {
-                    // Show loading indication
                     submitButton.setAttribute('data-kt-indicator', 'on');
 
-                    // Disable button to avoid multiple click
                     submitButton.disabled = true;
 
-                    // Simulate ajax request
                     setTimeout(function () {
-                        // Hide loading indication
                         submitButton.removeAttribute('data-kt-indicator');
 
-                        // Enable button
                         submitButton.disabled = false;
 
-                        // Get form data
                         var username = form.querySelector('[name="username"]').value;
                         var password = form.querySelector('[name="password"]').value;
 
-                        // Send data to the server
                         axios.post('animalcareapp/project/register_logic.php', {
                             username: username,
                             password: password
@@ -113,7 +101,6 @@ var KTSignupGeneral = function () {
                                     window.location.href = response.data.redirect;
                                 }, 1500);
                             } else {
-                                // Registration failed
                                 Swal.fire({
                                     text: response.data.message,
                                     icon: "error",
@@ -129,7 +116,6 @@ var KTSignupGeneral = function () {
                         });
                     }, 1500);
                 } else {
-                    // Show error popup
                     Swal.fire({
                         text: "დაფიქსირდა შეცდომა, ბოდიშს გიხდით.",
                         icon: "error",
@@ -144,16 +130,12 @@ var KTSignupGeneral = function () {
         });
     }
 
-    // Password input validation
     var validatePassword = function () {
-        return true;  // You can add your password validation logic here if needed
+        return true;
     }
 
-    // Public functions
     return {
-        // Initialization
         init: function () {
-            // Elements
             form = document.querySelector('#kt_sign_up_form');
             submitButton = document.querySelector('#kt_sign_up_submit');
 
@@ -162,7 +144,6 @@ var KTSignupGeneral = function () {
     };
 }();
 
-// On document ready
 KTUtil.onDOMContentLoaded(function () {
     KTSignupGeneral.init();
 });

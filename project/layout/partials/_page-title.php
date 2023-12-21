@@ -10,9 +10,9 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
             echo "ცხოველის დამატება";
         } else if ($page == 'about_animal') {
             echo "ინფორმაცია";
-        } else if ($page == 'logs' AND $_SESSION['privilege'] == 2) {
+        } else if ($page == 'logs' and $_SESSION['privilege'] == 2) {
             echo "ლოგები";
-        }else {
+        } else {
             echo "მთავარი";
         }
         ?>
@@ -34,9 +34,9 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                 echo "ცხოველის დამატება";
             } else if ($page == 'about_animal') {
                 echo "ინფორმაცია";
-            } else if ($page == 'logs' AND $_SESSION['privilege'] == 2) {
+            } else if ($page == 'logs' and $_SESSION['privilege'] == 2) {
                 echo "ლოგები";
-            }else {
+            } else {
                 echo "მთავარი";
             }
             ?></li>

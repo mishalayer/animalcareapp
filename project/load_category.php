@@ -32,7 +32,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $thumbnailImage = $row['pict_name'];
 ?>
     <div class="card card-flush flex-row-fluid mw-23">
-        <div class="card-header pt-3 px-6 pb-2 d-flex justify-content-center custom-card-header"><span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1"><?php echo $animalName; ?></span></div>
+        <div class="card-header pt-3 px-6 pb-2 d-flex justify-content-center custom-card-header"><a class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1" href="index.php?page=about_animal&animal_id=<?php echo $animalId; ?>"><?php echo $animalName; ?></a></div>
         <div class="card-body text-center px-6 py-2 border-1 border-top-dashed border-bottom-dashed border-gray-300">
             <img src="images/animal_images/<?php echo $thumbnailImage; ?>" class="rounded-3 mb-4 w-150px h-150px w-xxl-200px h-xxl-200px" style="object-fit: cover;" alt="" />
             <div class="mb-2">

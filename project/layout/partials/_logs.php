@@ -24,7 +24,7 @@ include("database.php");
                         <div class="logtable table-responsive">
                             <table id="logTable" class="stripe table table-striped gy-4 gs-1 col-12">
                                 <thead>
-                                    <tr>
+                                    <tr class="fw-bold fs-6">
                                         <th class='logTableResponsive'>ლოგის ID</th>
                                         <th>ობიექტი</th>
                                         <th>ქმედება</th>
@@ -59,15 +59,13 @@ include("database.php");
     <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
     <script>
         $(document).ready(function() {
-            // Initialize DataTable with global search enabled
             var table = $('#logTable').DataTable({
                 "order": [
                     [3, "desc"]
                 ],
-                "searching": true // Enable global search
+                "searching": true
             });
 
-            // Bind the input event to the custom search input field
             $('#globalSearch').on('input', function() {
                 table.search(this.value).draw();
             });
