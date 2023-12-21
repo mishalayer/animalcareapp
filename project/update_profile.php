@@ -22,9 +22,6 @@ if (isset($_POST['submit']) && $_POST['submit'] == 1) {
 
         mysqli_query($connection, $updateUserQuery);
 
-        $deleteOldPicturesQuery = "DELETE FROM userpictures WHERE user_id = $user_id";
-        mysqli_query($connection, $deleteOldPicturesQuery);
-
         if (!empty($_FILES['avatar']['name'])) {
             $picturePath = $_SESSION['picture_path'];
 
@@ -35,6 +32,9 @@ if (isset($_POST['submit']) && $_POST['submit'] == 1) {
             $targetPath = 'images/person_images/' . $imageName;
 
             move_uploaded_file($_FILES['avatar']['tmp_name'], $targetPath);
+
+            $deleteOldPicturesQuery = "DELETE FROM userpictures WHERE user_id = $user_id";
+            mysqli_query($connection, $deleteOldPicturesQuery);
 
             $updatePictureQuery = "INSERT INTO userpictures (pict_name, user_id) VALUES ('$imageName', $user_id)";
             mysqli_query($connection, $updatePictureQuery);
@@ -55,7 +55,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 1) {
 
         mysqli_commit($connection);
 
-        $logs_query = "INSERT INTO logs (object, action, initiator) VALUES ('" . $_SESSION['username'] . "', 'პროფილის განახლება', '" . $_SESSION['username'] ."');";
+        $logs_query = "INSERT INTO logs (object, action, initiator) VALUES ('" . $_SESSION['username'] . "', 'პროფილის განახლება', '" . $_SESSION['username'] . "');";
         mysqli_query($connection, $logs_query);
         $response = ['status' => 'success', 'message' => 'Profile updated successfully'];
     } catch (Exception $e) {

@@ -143,8 +143,12 @@
     height: 50px;
 }
 
-.customLogSearchFilter{
+.customLogSearchFilter {
     min-width: 200px;
+}
+
+.custom-card-header {
+    min-height: 40px !important;
 }
 
 @media only screen and (max-width: 600px) {
@@ -152,7 +156,7 @@
         max-width: 150px;
     }
 
-    .logTableResponsive{
+    .logTableResponsive {
         display: none;
     }
 }

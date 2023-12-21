@@ -11,6 +11,7 @@ if (isset($_GET['animal_id'])) {
         $animalData = mysqli_fetch_assoc($animalResult);
         $animal_name = $animalData['name'];
         $description = $animalData['description'];
+        $animalCreationDate = $animalData['creation_date'];
         $contact_info = $animalData['contact_info'];
         $owner_id = $animalData['owner_id'];
 
@@ -99,7 +100,9 @@ if (isset($_GET['animal_id'])) {
                 <?php if (isset($thumbnailURL)) : ?>
                     <div class="mb-18 custom-description-space">
                         <div class="fs-5 fw-semibold text-gray-600">
-                            <img class="custom-image" src="<?php echo $thumbnailURL; ?>" alt="Thumbnail Image">
+                            <a data-fslightbox="lightbox-animal-gallery" href="<?php echo $thumbnailURL; ?>">
+                                <img class="custom-image" src="<?php echo $thumbnailURL; ?>" alt="Thumbnail Image">
+                            </a>
                             <p class="custom-paragraph"><?php echo $description; ?></p>
                         </div>
                     </div>
@@ -112,7 +115,7 @@ if (isset($_GET['animal_id'])) {
                             <?php foreach ($imageURLs as $imageURL) : ?>
                                 <div class="custom-image-roll">
                                     <div class="card-xl-stretch mx-md-3">
-                                        <a class="d-block overlay mb-4 d-flex justify-content-center" data-fslightbox="lightbox-hot-sales" href="<?php echo $imageURL; ?>">
+                                        <a class="d-block overlay mb-4 d-flex justify-content-center" data-fslightbox="lightbox-animal-gallery" href="<?php echo $imageURL; ?>">
                                             <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-250px" style="background-image:url('<?php echo $imageURL; ?>'); width: 80%;"></div>
                                         </a>
                                     </div>
@@ -135,6 +138,7 @@ if (isset($_GET['animal_id'])) {
                             <h1 class="text-dark mb-5">საკონტაქტო ინფორმაცია</h1>
                         </div>
                         <div class="text-muted text-center fw-semibold lh-lg mb-2"><?php echo $contact_info ?></div>
+                        <div class="text-muted text-center fw-semibold lh-lg mb-2">განთავსების თარიღი: <?php echo $animalCreationDate ?></div>
                         <!-- <a href="../../demo1/dist/pages/user-profile/overview.html" class="fw-semibold link-primary">Author’s Profile</a> -->
                     </div>
                 </div>
