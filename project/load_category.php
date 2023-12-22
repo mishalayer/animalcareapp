@@ -13,12 +13,12 @@ if ($category == 'all') {
     $sql = "SELECT a.*, ap.pict_name
             FROM animaltable a
             JOIN animalpictures ap ON a.animal_id = ap.animal_id
-            WHERE ap.is_thumbnail = 1";
+            WHERE ap.is_thumbnail = 1 ORDER BY a.animal_id DESC";
 } else {
     $sql = "SELECT a.*, ap.pict_name
             FROM animaltable a
             JOIN animalpictures ap ON a.animal_id = ap.animal_id
-            WHERE a.animal_type = '$category' AND ap.is_thumbnail = 1";
+            WHERE a.animal_type = '$category' AND ap.is_thumbnail = 1 ORDER BY a.animal_id DESC";
 }
 
 $result = mysqli_query($connection, $sql);
