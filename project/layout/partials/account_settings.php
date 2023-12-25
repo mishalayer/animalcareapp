@@ -6,7 +6,7 @@
                     <i class="bi bi-arrow-return-left fs-1"></i>
                 </button>
             </a>
-            <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#account_profile_details" aria-expanded="true" aria-controls="account_profile_details">
+            <div class="card-header border-0" role="button" data-bs-toggle="collapse" data-bs-target="#account_profile_details" aria-expanded="true" aria-controls="account_profile_details">
                 <div class="card-title ps-20 m-0">
                     <h3 class="fw-bold m-0">მომხმარებლის მონაცემები</h3>
                 </div>

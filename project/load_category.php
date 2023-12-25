@@ -8,18 +8,54 @@ function truncateText($text, $numWords)
 }
 
 $category = isset($_POST['category']) ? $_POST['category'] : 'all';
+$sorting = isset($_POST['sorting']) ? $_POST['sorting'] : 'DESC';
+$support = isset($_POST['support']) ? $_POST['support'] : 'all';
 
-if ($category == 'all') {
-    $sql = "SELECT a.*, ap.pict_name
-            FROM animaltable a
-            JOIN animalpictures ap ON a.animal_id = ap.animal_id
-            WHERE ap.is_thumbnail = 1 ORDER BY a.animal_id DESC";
-} else {
-    $sql = "SELECT a.*, ap.pict_name
-            FROM animaltable a
-            JOIN animalpictures ap ON a.animal_id = ap.animal_id
-            WHERE a.animal_type = '$category' AND ap.is_thumbnail = 1 ORDER BY a.animal_id DESC";
+$query = "SELECT
+COALESCE(COUNT(*), 0) AS total,
+COALESCE(SUM(CASE WHEN animal_type = 'dog' THEN 1 ELSE 0 END), 0) AS dog_count,
+COALESCE(SUM(CASE WHEN animal_type = 'cat' THEN 1 ELSE 0 END), 0) AS cat_count,
+COALESCE(SUM(CASE WHEN animal_type = 'parrot' THEN 1 ELSE 0 END), 0) AS parrot_count,
+COALESCE(SUM(CASE WHEN animal_type = 'other' THEN 1 ELSE 0 END), 0) AS other_count
+FROM animaltable";
+if ($support == 'without_support') {
+    $query .= " WHERE animal_id NOT IN (SELECT animal_id FROM patrontable)";
+} elseif ($support == 'with_support') {
+    $query .= " WHERE animal_id IN (SELECT animal_id FROM patrontable)";
 }
+$result = mysqli_query($connection, $query);
+$row = mysqli_fetch_assoc($result);
+
+$allCategoryCount = $row['total'];
+$dogCategoryCount = $row['dog_count'];
+$catCategoryCount = $row['cat_count'];
+$parrotCategoryCount = $row['parrot_count'];
+$otherCategoryCount = $row['other_count'];
+
+$counts = array(
+    'total' => $allCategoryCount,
+    'dog' => $dogCategoryCount,
+    'cat' => $catCategoryCount,
+    'parrot' => $parrotCategoryCount,
+    'other' => $otherCategoryCount,
+);
+
+$sql = "SELECT a.*, ap.pict_name
+        FROM animaltable a
+        JOIN animalpictures ap ON a.animal_id = ap.animal_id
+        WHERE ap.is_thumbnail = 1";
+
+if ($support == 'without_support') {
+    $sql .= " AND a.animal_id NOT IN (SELECT animal_id FROM patrontable)";
+} elseif ($support == 'with_support') {
+    $sql .= " AND a.animal_id IN (SELECT animal_id FROM patrontable)";
+}
+
+if ($category != 'all') {
+    $sql .= " AND a.animal_type = '$category'";
+}
+
+$sql .= " ORDER BY a.animal_id $sorting";
 
 $result = mysqli_query($connection, $sql);
 
@@ -47,5 +83,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 <?php
 }
 $content = ob_get_clean();
-echo $content;
+
+echo json_encode(array('content' => $content, 'counts' => $counts));
 ?>
