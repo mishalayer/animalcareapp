@@ -18,6 +18,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                         include 'layout/partials/about_animal.php';
                     } else if ($page == 'logs' and $_SESSION['privilege'] == 2) {
                         include 'layout/partials/_logs.php';
+                    } else if ($page == 'my_list') {
+                        include 'layout/partials/my_list.php';
                     } else {
                         include 'layout/partials/_pos.php';
                     }

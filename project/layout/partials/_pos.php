@@ -48,7 +48,7 @@
         </div>
         <div class="d-flex align-items-center gap-2 gap-lg-3 m-5 justify-content-end">
             <div id="additional_filters_button" class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary custom-click-filter collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#additional_filters"><i class="bi bi-sliders"></i>დამატებითი ფილტრაცია</div>
-            <a href="?page=add_element" class="btn btn-sm fw-bold btn-primary">ცხოველის დამატება</a>
+            <a href="?page=add_element" class="btn btn-sm fw-bold btn-primary"><i class="bi bi-plus-lg"></i>ცხოველის დამატება</a>
         </div>
         <div class="d-flex flex-column flex-xl-row">
             <div class="d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">

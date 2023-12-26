@@ -12,6 +12,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
             echo "ინფორმაცია";
         } else if ($page == 'logs' and $_SESSION['privilege'] == 2) {
             echo "ლოგები";
+        } else if ($page == 'my_list') {
+            echo "ჩემი განცხადებები";
         } else {
             echo "მთავარი";
         }
@@ -36,6 +38,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                 echo "ინფორმაცია";
             } else if ($page == 'logs' and $_SESSION['privilege'] == 2) {
                 echo "ლოგები";
+            } else if ($page == 'my_list') {
+                echo "ჩემი განცხადებები";
             } else {
                 echo "მთავარი";
             }

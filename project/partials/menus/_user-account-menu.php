@@ -23,8 +23,8 @@
         </div>
     </div>
     <div class="separator my-2"></div>
-    <?php 
-    if ($_SESSION['privilege'] == 2){
+    <?php
+    if ($_SESSION['privilege'] == 2) {
         echo "<div class='menu-item px-5'>
         <a href='?page=logs' class='menu-link px-5'>
             ლოგები
@@ -32,6 +32,11 @@
     </div>";
     }
     ?>
+    <div class="menu-item px-5">
+        <a href="?page=my_list" class="menu-link px-5">
+            ჩემი განცხადებები
+        </a>
+    </div>
     <div class="menu-item px-5">
         <a href="?page=account_settings" class="menu-link px-5">
             პარამეტრები
