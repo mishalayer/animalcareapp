@@ -7,11 +7,11 @@
                         <h3 class="fw-bold m-0">დამატებითი ძებნის პარამეტრები</h3>
                     </div>
                 </div>
-                <div class="card-body border-top p-9">
+                <div class="card-body border-top py-9 px-md-9 px-1">
                     <div class="d-flex justify-content-between mb-5">
                         <div class="input-group customFilters">
                             <label class="input-group-text" for=""><i class="bi bi-search fs-1"></i></label>
-                            <input class="form-control form-select" placeholder="სახელი..." id="filterAnimalName" />
+                            <input class="form-control" placeholder="სახელი..." id="filterAnimalName" />
                         </div>
                         <div class="input-group customFilters">
                             <label class="input-group-text" for=""><i class="bi bi-sort-numeric-down fs-1"></i></label>
@@ -38,16 +38,16 @@
                             <label class="input-group-text" for=""><i class="bi bi-calendar-event fs-1"></i></label>
                             <input class="form-control form-select" placeholder="თარიღამდე..." id="calendar_end_date" />
                         </div>
-                        <div class="customFilters d-flex justify-content-end" style="width: 33%;">
-                            <div class="btn btn-sm fw-bold bg-secondary btn-color-gray-700 btn-active-color-primary custom-click-filter py-3 mb-0 me-5"><i class="bi bi-trash-fill fs-3"></i>გასუფთავება</div>
-                            <div id="filterSearchButton" class="btn btn-sm fw-bold btn-primary py-3"><i class="bi bi-search fs-3"></i>ძიება</div>
+                        <div class="input-group customFilters">
+                            <label class="input-group-text" for=""><i class="bi bi-trash-fill fs-1"></i></label>
+                            <div class="form-control btn btn-sm fw-bold bg-secondary btn-color-gray-700 btn-active-color-primary custom-click-filter clear-filter-button p-4" id="clearFilters">გასუფთავება</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="d-flex align-items-center gap-2 gap-lg-3 m-5 justify-content-end">
-            <div class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary custom-click-filter collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#additional_filters"><i class="bi bi-sliders"></i>დამატებითი ფილტრაცია</div>
+            <div id="additional_filters_button" class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary custom-click-filter collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#additional_filters"><i class="bi bi-sliders"></i>დამატებითი ფილტრაცია</div>
             <a href="?page=add_element" class="btn btn-sm fw-bold btn-primary">ცხოველის დამატება</a>
         </div>
         <div class="d-flex flex-column flex-xl-row">
@@ -120,15 +120,22 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
+            var nameSelection = document.getElementById("filterAnimalName");
             var sortingSelection = document.getElementById("sortingSelectionID");
             var supportSelection = document.getElementById("supportSelectionID");
+            var dateSelectionStart = document.getElementById("calendar_start_date");
+            var dateSelectionEnd = document.getElementById("calendar_end_date");
 
             function loadCategoryContent() {
                 var support = supportSelection.value;
                 var sorting = sortingSelection.value;
+                var name = nameSelection.value;
+                var start_date = dateSelectionStart.value;
+                var end_date = dateSelectionEnd.value;
                 var category = document.querySelector(".custom-click-filter a.active").getAttribute("href").replace("#category_", "");
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "load_category.php", true);
@@ -147,12 +154,24 @@
                     }
                 };
 
-                var requestData = "category=" + category + "&sorting=" + sorting + "&support=" + support;
+                var requestData = "category=" + category + "&sorting=" + sorting + "&support=" + support + "&name=" + name + "&start_date=" + start_date + "&end_date=" + end_date;
 
                 xhr.send(requestData);
             }
 
             loadCategoryContent();
+
+            function clearFilters() {
+                document.getElementById("filterAnimalName").value = "";
+                document.getElementById("sortingSelectionID").value = "DESC";
+                document.getElementById("supportSelectionID").value = "all";
+                document.getElementById("calendar_start_date").value = "";
+                document.getElementById("calendar_end_date").value = "";
+
+                loadCategoryContent();
+            }
+
+            document.getElementById("clearFilters").addEventListener("click", clearFilters);
 
             var categoryLinks = document.querySelectorAll(".custom-click-filter a");
             categoryLinks.forEach(function(link) {
@@ -168,14 +187,22 @@
             supportSelection.addEventListener("change", function() {
                 loadCategoryContent();
             });
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        flatpickr("#calendar_start_date", {
-            dateFormat: "Y-m-d"
-        });
-        flatpickr("#calendar_end_date", {
-            dateFormat: "Y-m-d"
+            var timeout;
+            document.getElementById("filterAnimalName").addEventListener("keyup", function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(loadCategoryContent, 500);
+            });
+            flatpickr("#calendar_start_date", {
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr, instance) {
+                    loadCategoryContent();
+                }
+            });
+            flatpickr("#calendar_end_date", {
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr, instance) {
+                    loadCategoryContent();
+                }
+            });
         });
     </script>

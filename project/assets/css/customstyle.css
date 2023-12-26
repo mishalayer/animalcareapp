@@ -151,6 +151,11 @@
     min-height: 40px !important;
 }
 
+.clear-filter-button {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 @media only screen and (max-width: 600px) {
     .customSpan {
         max-width: 150px;

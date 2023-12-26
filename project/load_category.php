@@ -10,6 +10,9 @@ function truncateText($text, $numWords)
 $category = isset($_POST['category']) ? $_POST['category'] : 'all';
 $sorting = isset($_POST['sorting']) ? $_POST['sorting'] : 'DESC';
 $support = isset($_POST['support']) ? $_POST['support'] : 'all';
+$name = isset($_POST['name']) ? $_POST['name'] : '';
+$start_date = isset($_POST['start_date']) ? $_POST['start_date'] : '';
+$end_date = isset($_POST['end_date']) ? $_POST['end_date'] : '';
 
 $query = "SELECT
 COALESCE(COUNT(*), 0) AS total,
@@ -17,12 +20,25 @@ COALESCE(SUM(CASE WHEN animal_type = 'dog' THEN 1 ELSE 0 END), 0) AS dog_count,
 COALESCE(SUM(CASE WHEN animal_type = 'cat' THEN 1 ELSE 0 END), 0) AS cat_count,
 COALESCE(SUM(CASE WHEN animal_type = 'parrot' THEN 1 ELSE 0 END), 0) AS parrot_count,
 COALESCE(SUM(CASE WHEN animal_type = 'other' THEN 1 ELSE 0 END), 0) AS other_count
-FROM animaltable";
+FROM animaltable WHERE 1 = 1";
+
 if ($support == 'without_support') {
-    $query .= " WHERE animal_id NOT IN (SELECT animal_id FROM patrontable)";
+    $query .= " AND animal_id NOT IN (SELECT animal_id FROM patrontable)";
 } elseif ($support == 'with_support') {
-    $query .= " WHERE animal_id IN (SELECT animal_id FROM patrontable)";
+    $query .= " AND animal_id IN (SELECT animal_id FROM patrontable)";
 }
+if ($name != "") {
+    $query .= " AND `name` LIKE '%$name%'";
+}
+
+if ($start_date != '' && $end_date != '') {
+    $query .= " AND creation_date BETWEEN '$start_date' AND '$end_date'";
+} elseif ($start_date != '') {
+    $query .= " AND creation_date >= '$start_date'";
+} elseif ($end_date != '') {
+    $query .= " AND creation_date <= '$end_date'";
+}
+
 $result = mysqli_query($connection, $query);
 $row = mysqli_fetch_assoc($result);
 
@@ -45,6 +61,10 @@ $sql = "SELECT a.*, ap.pict_name
         JOIN animalpictures ap ON a.animal_id = ap.animal_id
         WHERE ap.is_thumbnail = 1";
 
+if ($name != "") {
+    $sql .= " AND a.name LIKE '%$name%'";
+}
+
 if ($support == 'without_support') {
     $sql .= " AND a.animal_id NOT IN (SELECT animal_id FROM patrontable)";
 } elseif ($support == 'with_support') {
@@ -54,6 +74,15 @@ if ($support == 'without_support') {
 if ($category != 'all') {
     $sql .= " AND a.animal_type = '$category'";
 }
+
+if ($start_date != '' && $end_date != '') {
+    $sql .= " AND a.creation_date BETWEEN '$start_date' AND '$end_date'";
+} elseif ($start_date != '') {
+    $sql .= " AND a.creation_date >= '$start_date'";
+} elseif ($end_date != '') {
+    $sql .= " AND a.creation_date <= '$end_date'";
+}
+
 
 $sql .= " ORDER BY a.animal_id $sorting";
 
