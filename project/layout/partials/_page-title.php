@@ -14,6 +14,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
             echo "ლოგები";
         } else if ($page == 'my_list') {
             echo "ჩემი განცხადებები";
+        } else if ($page == 'support_list') {
+            echo "მეურვეობა";
         } else {
             echo "მთავარი";
         }
@@ -40,6 +42,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                 echo "ლოგები";
             } else if ($page == 'my_list') {
                 echo "ჩემი განცხადებები";
+            } else if ($page == 'support_list') {
+                echo "მეურვეობა";
             } else {
                 echo "მთავარი";
             }

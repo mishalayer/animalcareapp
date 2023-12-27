@@ -20,6 +20,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                         include 'layout/partials/_logs.php';
                     } else if ($page == 'my_list') {
                         include 'layout/partials/my_list.php';
+                    } else if ($page == 'support_list') {
+                        include 'layout/partials/support_list.php';
                     } else {
                         include 'layout/partials/_pos.php';
                     }

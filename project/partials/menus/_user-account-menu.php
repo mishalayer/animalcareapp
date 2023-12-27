@@ -8,7 +8,7 @@
                     </div>
                     <div>
                         <div>
-                            <?php echo $_SESSION['username'] ?></div> <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">
+                            <?php echo $_SESSION['username'] ?></div> <span class="badge badge-light-success fw-bold fs-8 px-2 py-1">
                             <div><?php if ($_SESSION['privilege'] == 2) {
                                         echo "ადმინისტრატორი";
                                     } else {
@@ -17,8 +17,6 @@
                         </span>
                     </div>
                 </div>
-                <a class="fw-semibold text-muted text-hover-primary fs-7">
-                    დაშვების დონე: <?php echo $_SESSION['privilege'] ?></a>
             </div>
         </div>
     </div>
@@ -27,6 +25,7 @@
     if ($_SESSION['privilege'] == 2) {
         echo "<div class='menu-item px-5'>
         <a href='?page=logs' class='menu-link px-5'>
+        <i class='bi bi-table me-5 fs-1'></i>
             ლოგები
         </a>
     </div>";
@@ -34,16 +33,25 @@
     ?>
     <div class="menu-item px-5">
         <a href="?page=my_list" class="menu-link px-5">
+            <i class="bi bi-file-richtext-fill me-5 fs-1"></i>
             ჩემი განცხადებები
         </a>
     </div>
     <div class="menu-item px-5">
+        <a href="?page=support_list" class="menu-link px-5">
+            <i class="bi bi-coin me-5 fs-1"></i>
+            მეურვეობა
+        </a>
+    </div>
+    <div class="menu-item px-5">
         <a href="?page=account_settings" class="menu-link px-5">
+            <i class="bi bi-gear-fill me-5 fs-1"></i>
             პარამეტრები
         </a>
     </div>
     <div class="menu-item px-5">
         <a href="log_out.php" class="menu-link px-5">
+            <i class="bi bi-box-arrow-left me-5 fs-1"></i>
             გამოსვლა
         </a>
     </div>

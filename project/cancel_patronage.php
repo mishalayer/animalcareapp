@@ -29,22 +29,22 @@ if (!ctype_digit($animalId) || $animalId <= 0) {
 $checkPatronageQuery = "SELECT * FROM patrontable WHERE animal_id = $animalId AND patron_id = $userId";
 $checkPatronageResult = mysqli_query($connection, $checkPatronageQuery);
 
-if ($checkPatronageResult && mysqli_num_rows($checkPatronageResult) > 0) {
+if (!$checkPatronageResult || mysqli_num_rows($checkPatronageResult) === 0) {
     http_response_code(200);
-    echo "User already supports the animal";
+    echo "User does not support the animal";
     exit();
 }
 
-$insertPatronageQuery = "INSERT INTO patrontable (animal_id, patron_id) VALUES ($animalId, $userId)";
+$cancelPatronageQuery = "DELETE FROM patrontable WHERE animal_id = $animalId AND patron_id = $userId";
 
-if (mysqli_query($connection, $insertPatronageQuery)) {
-    $logs_query = "INSERT INTO logs (object, action, initiator) VALUES ('" . "ცხოველის ID=" . $animalId . " " . $name . "', 'მეურვეობის აღება', '" . $_SESSION['username'] . "');";
+if (mysqli_query($connection, $cancelPatronageQuery)) {
+    $logs_query = "INSERT INTO logs (object, action, initiator) VALUES ('" . "ცხოველის ID=" . $animalId . " " . $name . "', 'მეურვეობის გაუქმება', '" . $_SESSION['username'] . "');";
     mysqli_query($connection, $logs_query);
     http_response_code(200);
-    echo "Patronage information added successfully";
+    echo "Patronage canceled successfully";
 } else {
     http_response_code(500);
-    echo "Error adding patronage information: " . mysqli_error($connection);
+    echo "Error canceling patronage: " . mysqli_error($connection);
 }
 
 mysqli_close($connection);
