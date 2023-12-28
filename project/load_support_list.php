@@ -71,7 +71,7 @@ if (mysqli_num_rows($result) > 0) {
             </td>
             <td>
                 <div class="d-flex justify-content-end flex-shrink-0">
-                    <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1 cancel-patronage-button" onclick="cancel_patronage(<?php echo $animalId; ?>)">
+                    <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1 cancel-patronage-button" data-bs-toggle="modal" data-bs-target="#confirm_cancellation_modal" data-bs-data="<?php echo $animalName; ?>" data-bs-image="images/animal_images/<?php echo $thumbnailImage; ?>" data-bs-id="<?php echo $animalId; ?>">
                         <i class="bi bi-dash-circle fs-2"></i>
                     </button>
                 </div>
@@ -82,7 +82,7 @@ if (mysqli_num_rows($result) > 0) {
 } else {
     ?>
     <tr>
-        <td colspan="5" class="p-20 fs-1 fw-bold text-gray-600 text-center">თქვენ არავის არ მეურვეობთ, თუმცა ამის <a href="?page=pos" class="text-primary cursor-pointer fw-bold">შეცვლა შეიძლება :)</a></td>
+        <td colspan="5" class="p-20 fs-1 fw-bold text-gray-600 text-center">თქვენ არავის უწევთ მეურვეობას, თუმცა ამის <a href="?page=pos" class="text-primary cursor-pointer fw-bold">შეცვლა შეიძლება :)</a></td>
     </tr>
 <?php
 }

@@ -1,20 +1,3 @@
-<script>
-    function cancel_patronage(animalId) {
-        console.log("Cancel Patronage for animalId:", animalId);
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "cancel_patronage.php", true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                location.reload();
-            }
-        };
-
-        var requestData = "animalId=" + animalId;
-
-        xhr.send(requestData);
-    }
-</script>
 <div id="kt_app_content" class="app-content flex-column-fluid">
     <div id="kt_app_content_container" class="app-container container-xxl">
         <div class="card mb-5 mb-xl-8">
@@ -49,7 +32,45 @@
         </div>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" id="confirm_cancellation_modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header py-5">
+                <h3 class="modal-title">მეურვეობის შეწყვეტა</h3>
+                <button type="button" class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="bi bi-x fs-1"></i>
+                </button>
+            </div>
+            <div class="modal-body py-3">
+                <div class="d-flex justify-content-center">
+                    <img id="bodyImage" class="my-2" src="" style="height: 200px; width: 200px; object-fit: cover; border-radius: 0.475rem;">
+                </div>
+                <div class="d-flex justify-content-center my-3 fw-bold text-gray-600 fs-3"><span class="text-center">დარწმუნებული ხართ რომ გსურთ <span id="bodyText"></span>ს მეურვეობის შეწყვეტა?</span></div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button id="confirmCancelButton" value="" type="button" class="btn btn-danger fw-bold"><i class="bi bi-dash-circle fs-2"></i> შეწყვეტა</button>
+                <button type="button" class="btn btn-light fw-bold" data-bs-dismiss="modal">გაუქმება</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    function cancel_patronage(animalId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "cancel_patronage.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                location.reload();
+            }
+        };
+
+        var requestData = "animalId=" + animalId;
+
+        xhr.send(requestData);
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
         function loadCategoryContent() {
             var xhr = new XMLHttpRequest();
@@ -67,5 +88,28 @@
         }
 
         loadCategoryContent();
+    });
+
+    var cancellationModal = document.getElementById('confirm_cancellation_modal')
+    cancellationModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget;
+
+        var id = button.getAttribute('data-bs-id');
+        var data = button.getAttribute('data-bs-data');
+        var image = button.getAttribute('data-bs-image');
+
+        var bodyImage = document.getElementById("bodyImage");
+        var bodyText = document.getElementById("bodyText");
+        var confirmCancelButton = document.getElementById("confirmCancelButton");
+
+        bodyImage.setAttribute("src", image);
+        bodyText.innerHTML = data;
+        confirmCancelButton.value = id;
+    })
+
+    var confirmCancelButton = document.getElementById("confirmCancelButton");
+    confirmCancelButton.addEventListener('click', function() {
+        animalId = confirmCancelButton.value;
+        cancel_patronage(animalId);
     });
 </script>

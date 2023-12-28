@@ -65,12 +65,12 @@ if (mysqli_num_rows($result) > 0) {
             </td>
             <td>
                 <div class="d-flex justify-content-end flex-shrink-0">
-                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                         <i class="bi bi-pencil-square fs-2"></i>
-                    </a>
-                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1">
+                    </button>
+                    <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-1 delete-element-button" data-bs-toggle="modal" data-bs-target="#delete_element_modal" data-bs-data="<?php echo $animalName; ?>" data-bs-image="images/animal_images/<?php echo $thumbnailImage; ?>" data-bs-id="<?php echo $animalId; ?>">
                         <i class="bi bi-trash-fill fs-2"></i>
-                    </a>
+                    </button>
                 </div>
             </td>
         </tr>
