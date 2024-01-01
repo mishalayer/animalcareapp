@@ -98,12 +98,12 @@ if (isset($_GET['animal_id'])) {
                 </div>
 
                 <?php if (isset($thumbnailURL)) : ?>
-                    <div class="mb-18 custom-description-space">
-                        <div class="fs-5 fw-semibold text-gray-600">
-                            <a data-fslightbox="lightbox-animal-gallery" href="<?php echo $thumbnailURL; ?>">
-                                <img class="custom-image" src="<?php echo $thumbnailURL; ?>" alt="Thumbnail Image">
-                            </a>
-                            <p class="custom-paragraph"><?php echo $description; ?></p>
+                    <div class="mb-18 d-flex flex-column flex-md-row">
+                        <a class="mx-auto mx-md-0 mb-md-0 mb-5" data-fslightbox="lightbox-animal-gallery" href="<?php echo $thumbnailURL; ?>">
+                            <img class="custom-image mb-0 me-md-10 me-0" src="<?php echo $thumbnailURL; ?>" alt="Thumbnail Image">
+                        </a>
+                        <div class="fs-5 p-5 fw-semibold text-gray-600 border-1 border-dashed card-rounded">
+                            <p class="custom-paragraph mb-0"><?php echo $description; ?></p>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -124,7 +124,7 @@ if (isset($_GET['animal_id'])) {
                         </div>
                     </div>
                 <?php endif; ?>
-                <div class="d-flex align-items-center border-1 border-dashed card-rounded p-5 p-lg-10 mb-14 mx-md-20">
+                <div class="d-flex align-items-center border-1 border-dashed card-rounded p-5 p-lg-10 mb-14">
                     <div class="text-center flex-shrink-0 me-7 mx-lg-13">
                         <div class="symbol symbol-70px symbol-circle mb-2">
                             <img src="<?php echo $ownerProfilePicture; ?>" class="" alt="Owner's Profile Picture" />

@@ -24,7 +24,7 @@
                             }
                         </style>
                         <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
-                            <div class="image-input-wrapper w-150px h-150px"></div>
+                            <div class="image-input-wrapper w-150px h-150px custom-image-wrapper"></div>
                             <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                 <i class="bi bi-pencil-fill fs-7"></i>
                                 <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />

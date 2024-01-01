@@ -7,40 +7,50 @@
                         <h3 class="fw-bold m-0">დამატებითი ძებნის პარამეტრები</h3>
                     </div>
                 </div>
-                <div class="card-body border-top py-9 px-md-9 px-1">
-                    <div class="d-flex justify-content-between mb-5">
-                        <div class="input-group customFilters">
-                            <label class="input-group-text" for=""><i class="bi bi-search fs-1"></i></label>
-                            <input class="form-control" placeholder="სახელი..." id="filterAnimalName" />
+                <div class="card-body border-top py-9 px-md-9 px-4">
+                    <div class="d-flex justify-content-between mb-5 row">
+                        <div class="col-6 col-md-4 px-1 mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text" for=""><i class="bi bi-search fs-1"></i></label>
+                                <input class="form-control" placeholder="სახელი..." id="filterAnimalName" />
+                            </div>
                         </div>
-                        <div class="input-group customFilters">
-                            <label class="input-group-text" for=""><i class="bi bi-sort-numeric-down fs-1"></i></label>
-                            <select name="sortingSelection" id="sortingSelectionID" class="form-select">
-                                <option value="DESC" selected>ჯერ ახალი</option>
-                                <option value="ASC">ჯერ ძველი</option>
-                            </select>
+                        <div class="col-6 col-md-4 px-1 mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text" for=""><i class="bi bi-sort-numeric-down fs-1"></i></label>
+                                <select name="sortingSelection" id="sortingSelectionID" class="form-select">
+                                    <option value="DESC" selected>ჯერ ახალი</option>
+                                    <option value="ASC">ჯერ ძველი</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="input-group customFilters">
-                            <label class="input-group-text" for=""><i class="bi bi-person-heart fs-1"></i></label>
-                            <select name="supportSelection" id="supportSelectionID" class="form-select">
-                                <option value="all" selected>ყველა</option>
-                                <option value="without_support">მეურვის გარეშე</option>
-                                <option value="with_support">მეურვის მქონე</option>
-                            </select>
+                        <div class="col-6 col-md-4 px-1 mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text" for=""><i class="bi bi-person-heart fs-1"></i></label>
+                                <select name="supportSelection" id="supportSelectionID" class="form-select">
+                                    <option value="all" selected>ყველა</option>
+                                    <option value="without_support">მეურვის გარეშე</option>
+                                    <option value="with_support">მეურვის მქონე</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <div class="input-group customFilters">
-                            <label class="input-group-text" for=""><i class="bi bi-calendar-event fs-1" style="transform: scaleX(-1);"></i></label>
-                            <input class="form-control form-select" placeholder="თარიღიდან..." id="calendar_start_date" />
+                        <div class="col-6 col-md-4 px-1 mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text" for=""><i class="bi bi-calendar-event fs-1" style="transform: scaleX(-1);"></i></label>
+                                <input class="form-control form-select" placeholder="თარიღიდან..." id="calendar_start_date" />
+                            </div>
                         </div>
-                        <div class="input-group customFilters">
-                            <label class="input-group-text" for=""><i class="bi bi-calendar-event fs-1"></i></label>
-                            <input class="form-control form-select" placeholder="თარიღამდე..." id="calendar_end_date" />
+                        <div class="col-6 col-md-4 px-1 mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text" for=""><i class="bi bi-calendar-event fs-1"></i></label>
+                                <input class="form-control form-select" placeholder="თარიღამდე..." id="calendar_end_date" />
+                            </div>
                         </div>
-                        <div class="input-group customFilters">
-                            <label class="input-group-text" for=""><i class="bi bi-trash-fill fs-1"></i></label>
-                            <div class="form-control btn btn-sm fw-bold bg-secondary btn-color-gray-700 btn-active-color-primary custom-click-filter clear-filter-button p-4" id="clearFilters">გასუფთავება</div>
+                        <div class="col-6 col-md-4 px-1 mb-3">
+                            <div class="input-group">
+                                <label class="input-group-text" for=""><i class="bi bi-trash-fill fs-1"></i></label>
+                                <div class="form-control btn btn-sm fw-bold bg-secondary btn-color-gray-700 btn-active-color-primary custom-click-filter clear-filter-button p-4" id="clearFilters">გასუფთავება</div>
+                            </div>
                         </div>
                     </div>
                 </div>
