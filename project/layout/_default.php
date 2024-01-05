@@ -22,6 +22,8 @@ $page = isset($_GET['page']) ? $_GET['page'] : "index";
                         include 'layout/partials/my_list.php';
                     } else if ($page == 'support_list') {
                         include 'layout/partials/support_list.php';
+                    } else if ($page == 'edit_animal') {
+                        include 'layout/partials/edit_animal.php';
                     } else {
                         include 'layout/partials/_pos.php';
                     }

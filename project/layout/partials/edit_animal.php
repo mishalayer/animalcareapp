@@ -1,6 +1,53 @@
+<?php
+include 'database.php';
+
+if (isset($_GET['animal_id'])) {
+    $animal_id = $_GET['animal_id'];
+    $user_id = $_SESSION['user_id'];
+
+    $checkOwnerQuery = "SELECT * FROM animaltable WHERE animal_id = $animal_id AND owner_id = $user_id";
+    $checkOwnerResult = mysqli_query($connection, $checkOwnerQuery);
+
+    if (!$checkOwnerResult || mysqli_num_rows($checkOwnerResult) === 0) {
+        http_response_code(200);
+        echo "User is not the owner of the animal";
+        exit();
+    }
+
+    $animalQuery = "SELECT * FROM animaltable WHERE animal_id = $animal_id";
+    $animalResult = mysqli_query($connection, $animalQuery);
+
+    if ($animalResult) {
+        $animalData = mysqli_fetch_assoc($animalResult);
+        $animal_name = $animalData['name'];
+        $description = $animalData['description'];
+        $animal_type = $animalData['animal_type'];
+        $animalCreationDate = $animalData['creation_date'];
+        $contact_info = $animalData['contact_info'];
+
+        $imagesQuery = "SELECT * FROM animalpictures WHERE animal_id = $animal_id";
+        $imagesResult = mysqli_query($connection, $imagesQuery);
+        $imageURLs = [];
+        $imageSizes = [];
+
+        if ($imagesResult) {
+            while ($imageData = mysqli_fetch_assoc($imagesResult)) {
+                $imageUrl = 'images/animal_images/' . $imageData['pict_name'];
+                if ($imageData['is_thumbnail'] == 1) {
+                    $thumbnailURL = $imageUrl;
+                } else {
+                    $imageURLs[] = $imageUrl;
+                    $imageSizes[] = filesize($imageUrl);
+                }
+            }
+        }
+    }
+}
+
+?>
 <div id="kt_app_content" class="app-content flex-column-fluid">
     <div id="kt_app_content_container" class="app-container container-xxl">
-        <form id="add_animal_form" class="form d-flex flex-column flex-lg-row">
+        <form id="edit_animal_form" class="form d-flex flex-column flex-lg-row">
             <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                 <div class="card card-flush pb-4 pt-1">
                     <a href="?page=index">
@@ -23,7 +70,7 @@
                                 background-image: url('assets/media/svg/files/blank-image-dark.svg');
                             }
                         </style>
-                        <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
+                        <div class="image-input image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
                             <div class="image-input-wrapper w-150px h-150px custom-image-wrapper"></div>
                             <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                 <i class="bi bi-pencil-fill fs-7"></i>
@@ -109,8 +156,8 @@
                 </div>
                 <div class="d-flex justify-content-end">
                     <a href="?page=pos" class="btn btn-light me-5">გაუქმება</a>
-                    <button type="submit" id="submit_animal_button" class="btn btn-primary">
-                        <span class="indicator-label">განთავსება</span>
+                    <button type="submit" id="edit_animal_button" class="btn btn-primary">
+                        <span class="indicator-label">რედაქტირება</span>
                         <span class="indicator-progress">გთხოვთ დაელოდოთ...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
@@ -122,12 +169,14 @@
 <script src="assets/plugins/global/plugins.bundle.js"></script>
 <script src="assets/js/scripts.bundle.js"></script>
 <script>
-    document.querySelector("#submit_animal_button").addEventListener("click", function(event) {
+    var animalid = <?php echo $animal_id; ?>;
+    document.querySelector("#edit_animal_button").addEventListener("click", function(event) {
         event.preventDefault();
 
-        var formData = new FormData(document.getElementById("add_animal_form"));
+        var formData = new FormData(document.getElementById("edit_animal_form"));
 
         formData.append("owner_id", <?php echo $_SESSION['user_id']; ?>);
+        formData.append("animal_id", <?php echo $animal_id; ?>);
 
         var mainImageInput = document.querySelector('[name="avatar"]');
 
@@ -141,14 +190,15 @@
             formData.append('is_thumbnail[]', 0);
         });
 
-        fetch('submit_animal.php', {
+        console.log(formData);
+
+        fetch('edit_animal_logictest.php', { //remove the 'test' part here later
                 method: 'POST',
                 body: formData,
             })
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                window.location.href = '?page=index';
             })
             .catch(error => {
                 console.error("Error submitting form:", error);
@@ -160,7 +210,7 @@
         var nameInput = document.querySelector('[name="name"]');
         var informationInput = document.querySelector('[name="contact_info"]');
         var imageInput = document.querySelector('.image-input');
-        var submitButton = document.querySelector('#submit_animal_button');
+        var submitButton = document.querySelector('#edit_animal_button');
 
         function checkRequiredFields() {
             var nameFilled = nameInput.value.trim() !== '';
@@ -186,7 +236,7 @@
     Dropzone.autoDiscover = false;
 
     var myDropzone = new Dropzone("#animal_dropzone", {
-        url: "submit_animal.php",
+        url: "edit_animal_logic.php",
         maxFiles: 3,
         acceptedFiles: "image/*",
         addRemoveLinks: true,
@@ -199,4 +249,41 @@
             myDropzone.removeFile(removedFile);
         }
     });
+</script>
+<script>
+    <?php if (isset($animalData)) : ?>
+        document.querySelector('[name="name"]').value = '<?php echo $animal_name; ?>';
+        document.querySelector('[name="contact_info"]').value = '<?php echo $contact_info; ?>';
+        document.querySelector('#add_element_animal_type').value = '<?php echo $animal_type; ?>';
+        document.querySelector('[name="description"]').value = '<?php echo $description; ?>';
+
+        var mainImageInput = document.querySelector('[name="avatar"]');
+        var mainImageWrapper = document.querySelector('.image-input-wrapper');
+        mainImageWrapper.style.backgroundImage = 'url(<?php echo $thumbnailURL; ?>)';
+        mainImageInput.value = '';
+
+        <?php foreach ($imageURLs as $index => $imageUrl) : ?>
+            var imageName = '<?php echo str_replace("images/animal_images/", "", $imageUrl); ?>';
+
+            var File = {
+                name: imageName,
+                size: <?php echo $imageSizes[$index]; ?>,
+                dataURL: '<?php echo $imageUrl; ?>'
+            };
+
+            myDropzone.emit("addedfile", File);
+
+            createThumbnail(myDropzone, File, '<?php echo $imageUrl; ?>');
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    function createThumbnail(dropzone, file, imageUrl) {
+        dropzone.createThumbnailFromUrl(file, dropzone.options.thumbnailWidth, dropzone.options.thumbnailHeight,
+            dropzone.options.thumbnailMethod, true,
+            function(thumbnail) {
+                dropzone.emit("thumbnail", file, thumbnail);
+            });
+
+        dropzone.files.push(file);
+    }
 </script>
