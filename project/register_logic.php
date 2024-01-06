@@ -12,7 +12,7 @@ if ($data !== null) {
 
     if ($checkResult) {
         if (mysqli_num_rows($checkResult) > 0) {
-            $response = array('status' => 'error', 'message' => 'Username already exists');
+            $response = array('status' => 'error', 'message' => 'მომხმარებელი ასეთი სახელით უკვე არსებობს');
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $insertQuery = "INSERT INTO users (username, password) VALUES ('$username', '$hashedPassword')";

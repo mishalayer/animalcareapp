@@ -26,6 +26,10 @@ var KTSignupGeneral = function () {
                             notEmpty: {
                                 message: 'პაროლის შეყვანა სავალდებულოა!'
                             },
+                            stringLength: {
+                                min: 8,
+                                message: 'პაროლი უნდა შეიცავდეს მინიმუმ 8 სიმბოლოს!'
+                            },
                             callback: {
                                 message: 'გთხოვთ შეიყვანოთ ვალიდური პაროლი!',
                                 callback: function (input) {

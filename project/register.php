@@ -83,7 +83,7 @@ if (!empty($_SESSION["loggedin"])) {
                                         <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
                                     </div>
                                 </div>
-                                <div class="text-muted">გამოიყენეთ მინიმუმ 8 ლათინური ასო, სიმბოლოს ან რიცხვისგან შემდგარი პაროლი.</div>
+                                <div class="text-muted">გამოიყენეთ მინიმუმ 8 სიმბოლოსგან შემდგარი პაროლი.</div>
                             </div>
                             <div class="fv-row mb-8">
                                 <input placeholder="გაიმეორეთ პაროლი" name="confirm-password" type="password" autocomplete="off" class="form-control bg-transparent" />

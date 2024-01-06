@@ -168,6 +168,27 @@
     align-items: stretch;
 }
 
+.custom-drop-zone {
+    min-height: auto;
+    padding: 1.5rem 1.75rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: var(--bs-primary-light);
+}
+
+.custom-image-thumbnail {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-corner-button {
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+
 @media only screen and (max-width: 600px) {
     .customSpan {
         max-width: 150px;

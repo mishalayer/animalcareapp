@@ -48,14 +48,15 @@
                     </div>
                     <div class="card-body pt-0">
                         <div class="fv-row mb-2">
-                            <div class="dropzone" id="animal_dropzone">
-                                <div class="dz-message needsclick">
+                            <div class="custom-drop-zone border-1 border-dashed card-rounded" id="animal_dropzone">
+                                <div id="dropzone_message">
                                     <i class="bi bi-upload text-primary" style="font-size: 3rem;"></i>
                                     <div class="ms-4">
-                                        <h3 class="fs-5 fw-bold text-gray-900 mb-1">აირჩიეთ ან გადმოქაჩეთ სურათი.</h3>
+                                        <h3 class="fs-5 fw-bold text-gray-900 my-2">აირჩიეთ ან გადმოქაჩეთ სურათი.</h3>
                                         <span class="fs-7 fw-semibold text-gray-400">შესაძლებელია 3 სურათამდე ატვირთვა</span>
                                     </div>
                                 </div>
+                                <div id="dropzone_content"></div>
                             </div>
                         </div>
                         <div class="text-muted fs-7">ატვირთეთ სურათები გალერეაში</div>
@@ -98,7 +99,7 @@
                                     <div>
                                         <label class="form-label">ცხოველის აღწერა</label>
                                         <div class="mb-2">
-                                            <textarea name="description" class="form-control" id="query" style="height: 111px;" placeholder="ცხოველის აღწერა, მაგალითად: ბინი, 2 წლის, მამრობითი სქესის, აცრილია, უყვარს ბურთთან თამაში, არის უსაყვარლესი ძაღლი"></textarea>
+                                            <textarea name="description" class="form-control" id="query" style="height: 129px;" placeholder="ცხოველის აღწერა, მაგალითად: ბინი, 2 წლის, მამრობითი სქესის, აცრილია, უყვარს ბურთთან თამაში, არის უსაყვარლესი ძაღლი"></textarea>
                                         </div>
                                         <div class="text-muted fs-7">მიუთითეთ ნებისმიერი ინფორმაცია ცხოველის შესახებ.</div>
                                     </div>
@@ -180,23 +181,149 @@
         });
 
         checkRequiredFields();
+
+        var dropzone = document.getElementById("animal_dropzone");
+        var dropzoneMessage = document.getElementById("dropzone_message");
+        var dropzoneContent = document.getElementById("dropzone_content");
+
+        function toggleDropzoneMessageVisibility() {
+            var hasChildren = dropzoneContent.children.length > 0;
+            dropzoneMessage.style.display = hasChildren ? "none" : "block";
+        }
+
+        toggleDropzoneMessageVisibility();
+
+        var observer = new MutationObserver(function(mutations) {
+            toggleDropzoneMessageVisibility();
+        });
+
+        var observerConfig = {
+            childList: true
+        };
+
+        observer.observe(dropzoneContent, observerConfig);
+
+
     });
 </script>
+
 <script>
-    Dropzone.autoDiscover = false;
+    const dropzone = document.getElementById('animal_dropzone');
+    const dropzoneContent = document.getElementById('dropzone_content');
+    const message = document.getElementById('dropzone_message');
 
-    var myDropzone = new Dropzone("#animal_dropzone", {
-        url: "submit_animal.php",
-        maxFiles: 3,
-        acceptedFiles: "image/*",
-        addRemoveLinks: true,
-        autoProcessQueue: false,
-    });
+    dropzone.addEventListener('dragover', handleDragOver);
+    dropzone.addEventListener('drop', handleDrop);
+    dropzone.addEventListener('click', handleClick);
 
-    myDropzone.on("addedfile", function(file) {
-        if (myDropzone.files.length > myDropzone.options.maxFiles) {
-            var removedFile = myDropzone.files[0];
-            myDropzone.removeFile(removedFile);
+    function handleDragOver(event) {
+        event.preventDefault();
+    }
+
+    function handleDrop(event) {
+        event.preventDefault();
+
+        const filesToProcess = Array.from(event.dataTransfer.files).slice(0, 3);
+
+        handleFiles(filesToProcess);
+    }
+
+    function handleClick(event) {
+        const isDeleteButton = event.target.closest('.custom-corner-button');
+        if (!isDeleteButton) {
+            const fileInput = createFileInput();
+            fileInput.addEventListener('change', function(event) {
+                const filesToProcess = Array.from(event.target.files).slice(0, 3);
+                handleFiles(filesToProcess);
+                document.body.removeChild(fileInput);
+            });
+            fileInput.click();
         }
-    });
+    }
+
+    function createFileInput() {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.style.display = 'none';
+        fileInput.multiple = true;
+        document.body.appendChild(fileInput);
+        return fileInput;
+    }
+
+    function handleFiles(files) {
+        const allowedExtensions = ['.png', '.jpg', '.jpeg'];
+        const filteredFiles = Array.from(files).filter(file => {
+            const extension = file.name.split('.').pop().toLowerCase();
+            return allowedExtensions.includes(`.${extension}`);
+        });
+
+        const totalFiles = dropzoneContent.childElementCount + filteredFiles.length;
+
+        if (totalFiles > 3) {
+            const filesToRemove = totalFiles - 3;
+
+            for (let i = 0; i < filesToRemove; i++) {
+                const oldestFile = dropzoneContent.firstChild;
+
+                if (oldestFile) {
+                    dropzoneContent.removeChild(oldestFile);
+                }
+            }
+        }
+
+        for (const file of filteredFiles) {
+            const thumbnailContainer = createThumbnailContainer(file);
+            dropzoneContent.appendChild(thumbnailContainer);
+        }
+
+        message.style.display = dropzoneContent.childElementCount === 0 ? 'block' : 'none';
+    }
+
+    function createThumbnailContainer(file) {
+        const thumbnailContainer = document.createElement('div');
+        thumbnailContainer.classList.add('p-3', 'custom-image-thumbnail');
+        const img = document.createElement('img');
+        img.classList.add('rounded');
+        img.src = URL.createObjectURL(file);
+        img.alt = 'Thumbnail';
+        img.style.width = '120px';
+        img.style.height = '120px';
+        img.style.objectFit = 'cover';
+
+        img.addEventListener('load', function() {
+            const deleteButton = document.createElement('i');
+            deleteButton.classList.add('btn', 'btn-danger', 'p-2', 'bi', 'bi-trash', 'fs-1', 'custom-corner-button');
+            deleteButton.addEventListener('click', function() {
+                dropzoneContent.removeChild(thumbnailContainer);
+                message.style.display = dropzoneContent.childElementCount === 0 ? 'block' : 'none';
+            });
+
+            thumbnailContainer.appendChild(img);
+            thumbnailContainer.appendChild(deleteButton);
+
+            dropzoneContent.appendChild(thumbnailContainer);
+        });
+
+        return thumbnailContainer;
+    }
+</script>
+
+
+<script>
+    // Dropzone.autoDiscover = false;
+
+    // var myDropzone = new Dropzone("#animal_dropzone", {
+    //     url: "submit_animal.php",
+    //     maxFiles: 3,
+    //     acceptedFiles: "image/*",
+    //     addRemoveLinks: true,
+    //     autoProcessQueue: false,
+    // });
+
+    // myDropzone.on("addedfile", function(file) {
+    //     if (myDropzone.files.length > myDropzone.options.maxFiles) {
+    //         var removedFile = myDropzone.files[0];
+    //         myDropzone.removeFile(removedFile);
+    //     }
+    // });
 </script>
