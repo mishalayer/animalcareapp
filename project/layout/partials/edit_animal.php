@@ -74,7 +74,7 @@ if (isset($_GET['animal_id'])) {
                             <div class="image-input-wrapper w-150px h-150px custom-image-wrapper"></div>
                             <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                 <i class="bi bi-pencil-fill fs-7"></i>
-                                <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                <input type="file" name="avatar" id="main_image_thumbnail" accept=".png, .jpg, .jpeg" />
                                 <input type="hidden" name="avatar_remove" />
                             </label>
                             <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
@@ -95,14 +95,15 @@ if (isset($_GET['animal_id'])) {
                     </div>
                     <div class="card-body pt-0">
                         <div class="fv-row mb-2">
-                            <div class="dropzone" id="animal_dropzone">
-                                <div class="dz-message needsclick">
+                            <div class="custom-drop-zone border-1 border-dashed card-rounded" id="animal_dropzone">
+                                <div id="dropzone_message">
                                     <i class="bi bi-upload text-primary" style="font-size: 3rem;"></i>
                                     <div class="ms-4">
-                                        <h3 class="fs-5 fw-bold text-gray-900 mb-1">აირჩიეთ ან გადმოქაჩეთ სურათი.</h3>
+                                        <h3 class="fs-5 fw-bold text-gray-900 my-2">აირჩიეთ ან გადმოქაჩეთ სურათი.</h3>
                                         <span class="fs-7 fw-semibold text-gray-400">შესაძლებელია 3 სურათამდე ატვირთვა</span>
                                     </div>
                                 </div>
+                                <div id="dropzone_content"></div>
                             </div>
                         </div>
                         <div class="text-muted fs-7">ატვირთეთ სურათები გალერეაში</div>
@@ -169,39 +170,61 @@ if (isset($_GET['animal_id'])) {
 <script src="assets/plugins/global/plugins.bundle.js"></script>
 <script src="assets/js/scripts.bundle.js"></script>
 <script>
-    var animalid = <?php echo $animal_id; ?>;
-    document.querySelector("#edit_animal_button").addEventListener("click", function(event) {
+    document.querySelector("#edit_animal_button").addEventListener("click", async function(event) {
         event.preventDefault();
 
         var formData = new FormData(document.getElementById("edit_animal_form"));
-
+        formData.append("animal_id", <?php echo $animal_id; ?>)
         formData.append("owner_id", <?php echo $_SESSION['user_id']; ?>);
-        formData.append("animal_id", <?php echo $animal_id; ?>);
 
         var mainImageInput = document.querySelector('[name="avatar"]');
-
         if (mainImageInput.files.length > 0) {
-            formData.append('file[]', mainImageInput.files[0]);
+            formData.append('file[]', mainImageInput.files[0], 'main_image.png');
             formData.append('is_thumbnail[]', 1);
+        } else {
+            formData.append('mainImageNoChange', 'No Change');
         }
 
-        myDropzone.files.forEach(function(file) {
-            formData.append('file[]', file);
+        var dropzoneContent = document.getElementById('dropzone_content');
+        var thumbnailContainers = dropzoneContent.getElementsByClassName('custom-image-thumbnail');
+
+        var fileCreationPromises = [];
+
+        for (let i = 0; i < thumbnailContainers.length; i++) {
+            var img = thumbnailContainers[i].querySelector('.custom-image-container');
+            if (img) {
+                var fileCreationPromise = fetch(img.src)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        return new File([blob], 'image_' + (i + 1) + '.png', {
+                            type: 'image/png'
+                        });
+                    });
+
+                fileCreationPromises.push(fileCreationPromise);
+            }
+        }
+
+        var files = await Promise.all(fileCreationPromises);
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append('file[]', files[i]);
             formData.append('is_thumbnail[]', 0);
-        });
+        }
 
-        console.log(formData);
+        const page = '?page=<?php echo isset($animal_id) ? 'about_animal&animal_id=' . $animal_id : 'index'; ?>';
 
-        fetch('edit_animal_logictest.php', { //remove the 'test' part here later
+        fetch('edit_animal_logic.php', {
                 method: 'POST',
                 body: formData,
             })
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                window.location.href = page;
             })
             .catch(error => {
-                console.error("Error submitting form:", error);
+                console.error("Error editing form:", error);
             });
     });
 </script>
@@ -210,14 +233,14 @@ if (isset($_GET['animal_id'])) {
         var nameInput = document.querySelector('[name="name"]');
         var informationInput = document.querySelector('[name="contact_info"]');
         var imageInput = document.querySelector('.image-input');
-        var submitButton = document.querySelector('#edit_animal_button');
+        var editButton = document.querySelector('#edit_animal_button');
 
         function checkRequiredFields() {
             var nameFilled = nameInput.value.trim() !== '';
             var informationFilled = informationInput.value.trim() !== '';
             var isImageChanged = !imageInput.classList.contains('image-input-empty');
 
-            submitButton.disabled = !(nameFilled && informationFilled && isImageChanged);
+            editButton.disabled = !(nameFilled && informationFilled && isImageChanged);
         }
 
         nameInput.addEventListener("input", checkRequiredFields);
@@ -230,25 +253,169 @@ if (isset($_GET['animal_id'])) {
         });
 
         checkRequiredFields();
+
+        var dropzone = document.getElementById("animal_dropzone");
+        var dropzoneMessage = document.getElementById("dropzone_message");
+        var dropzoneContent = document.getElementById("dropzone_content");
+
+        function toggleDropzoneMessageVisibility() {
+            var hasChildren = dropzoneContent.children.length > 0;
+            dropzoneMessage.style.display = hasChildren ? "none" : "block";
+        }
+
+        toggleDropzoneMessageVisibility();
+
+        var observer = new MutationObserver(function(mutations) {
+            toggleDropzoneMessageVisibility();
+        });
+
+        var observerConfig = {
+            childList: true
+        };
+
+        observer.observe(dropzoneContent, observerConfig);
+
+
     });
 </script>
+
 <script>
-    Dropzone.autoDiscover = false;
+    const dropzone = document.getElementById('animal_dropzone');
+    const dropzoneContent = document.getElementById('dropzone_content');
+    const message = document.getElementById('dropzone_message');
 
-    var myDropzone = new Dropzone("#animal_dropzone", {
-        url: "edit_animal_logic.php",
-        maxFiles: 3,
-        acceptedFiles: "image/*",
-        addRemoveLinks: true,
-        autoProcessQueue: false,
-    });
+    dropzone.addEventListener('dragover', handleDragOver);
+    dropzone.addEventListener('drop', handleDrop);
+    dropzone.addEventListener('click', handleClick);
 
-    myDropzone.on("addedfile", function(file) {
-        if (myDropzone.files.length > myDropzone.options.maxFiles) {
-            var removedFile = myDropzone.files[0];
-            myDropzone.removeFile(removedFile);
+    function handleDragOver(event) {
+        event.preventDefault();
+    }
+
+    function handleDrop(event) {
+        event.preventDefault();
+
+        const filesToProcess = Array.from(event.dataTransfer.files).slice(0, 3);
+
+        handleFiles(filesToProcess);
+    }
+
+    function handleClick(event) {
+        const isDeleteButton = event.target.closest('.custom-corner-button');
+        if (!isDeleteButton) {
+            const fileInput = createFileInput();
+            fileInput.addEventListener('change', function(event) {
+                const filesToProcess = Array.from(event.target.files).slice(0, 3);
+                handleFiles(filesToProcess);
+                document.body.removeChild(fileInput);
+            });
+            fileInput.click();
         }
-    });
+    }
+
+    function createFileInput() {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.style.display = 'none';
+        fileInput.multiple = true;
+        document.body.appendChild(fileInput);
+        return fileInput;
+    }
+
+    function handleFiles(files) {
+        const allowedExtensions = ['.png', '.jpg', '.jpeg'];
+        const filteredFiles = Array.from(files).filter(file => {
+            const extension = file.name.split('.').pop().toLowerCase();
+            return allowedExtensions.includes(`.${extension}`);
+        });
+
+        const totalFiles = dropzoneContent.childElementCount + filteredFiles.length;
+
+        if (totalFiles > 3) {
+            const filesToRemove = totalFiles - 3;
+
+            for (let i = 0; i < filesToRemove; i++) {
+                const oldestFile = dropzoneContent.firstChild;
+
+                if (oldestFile) {
+                    dropzoneContent.removeChild(oldestFile);
+                }
+            }
+        }
+
+        for (const file of filteredFiles) {
+            const thumbnailContainer = createThumbnailContainer(file);
+            dropzoneContent.appendChild(thumbnailContainer);
+        }
+
+        message.style.display = dropzoneContent.childElementCount === 0 ? 'block' : 'none';
+    }
+
+    function preloadThumbnailContainer(imageUrl) {
+        const thumbnailContainer = document.createElement('div');
+        thumbnailContainer.classList.add('p-3', 'custom-image-thumbnail');
+
+        const input = document.createElement('input');
+        input.type = 'image';
+        input.classList.add('custom-image-container');
+        input.alt = 'Thumbnail';
+        input.style.width = '120px';
+        input.style.height = '120px';
+        input.style.objectFit = 'cover';
+
+        const deleteButton = document.createElement('i');
+        deleteButton.classList.add('btn', 'rounded-circle', 'rounded-circle', 'btn-active-color-primary', 'bg-body', 'p-1', 'bi', 'bi-x', 'fs-2', 'custom-corner-button');
+        deleteButton.addEventListener('click', function() {
+            dropzoneContent.removeChild(thumbnailContainer);
+            message.style.display = dropzoneContent.childElementCount === 0 ? 'block' : 'none';
+        });
+
+        thumbnailContainer.appendChild(input);
+        thumbnailContainer.appendChild(deleteButton);
+
+        fetch(imageUrl)
+            .then(response => response.blob())
+            .then(blob => {
+                const file = new File([blob], 'image.png', {
+                    type: 'image/png'
+                });
+                input.src = URL.createObjectURL(file);
+                thumbnailContainer.appendChild(input);
+                dropzoneContent.appendChild(thumbnailContainer);
+            })
+            .catch(error => {
+                console.error('Error fetching image:', error);
+            });
+    }
+
+    function createThumbnailContainer(file) {
+        const thumbnailContainer = document.createElement('div');
+        thumbnailContainer.classList.add('p-3', 'custom-image-thumbnail');
+
+        const input = document.createElement('input');
+        input.type = 'image';
+        input.classList.add('custom-image-container');
+        input.src = URL.createObjectURL(file);
+        input.alt = 'Thumbnail';
+        input.style.width = '120px';
+        input.style.height = '120px';
+        input.style.objectFit = 'cover';
+        input.addEventListener('load', function() {
+            const deleteButton = document.createElement('i');
+            deleteButton.classList.add('btn', 'rounded-circle', 'rounded-circle', 'btn-active-color-primary', 'bg-body', 'p-1', 'bi', 'bi-x', 'fs-2', 'custom-corner-button');
+            deleteButton.addEventListener('click', function() {
+                dropzoneContent.removeChild(thumbnailContainer);
+                message.style.display = dropzoneContent.childElementCount === 0 ? 'block' : 'none';
+            });
+
+            thumbnailContainer.appendChild(input);
+            thumbnailContainer.appendChild(deleteButton);
+
+            dropzoneContent.appendChild(thumbnailContainer);
+        });
+
+        return thumbnailContainer;
+    }
 </script>
 <script>
     <?php if (isset($animalData)) : ?>
@@ -263,27 +430,35 @@ if (isset($_GET['animal_id'])) {
         mainImageInput.value = '';
 
         <?php foreach ($imageURLs as $index => $imageUrl) : ?>
-            var imageName = '<?php echo str_replace("images/animal_images/", "", $imageUrl); ?>';
-
-            var File = {
-                name: imageName,
-                size: <?php echo $imageSizes[$index]; ?>,
-                dataURL: '<?php echo $imageUrl; ?>'
-            };
-
-            myDropzone.emit("addedfile", File);
-
-            createThumbnail(myDropzone, File, '<?php echo $imageUrl; ?>');
+            var thumbnailContainer = preloadThumbnailContainer('<?php echo $imageUrl; ?>');
+            dropzoneContent.appendChild(thumbnailContainer);
         <?php endforeach; ?>
+
     <?php endif; ?>
 
-    function createThumbnail(dropzone, file, imageUrl) {
-        dropzone.createThumbnailFromUrl(file, dropzone.options.thumbnailWidth, dropzone.options.thumbnailHeight,
-            dropzone.options.thumbnailMethod, true,
-            function(thumbnail) {
-                dropzone.emit("thumbnail", file, thumbnail);
-            });
+    function preloadThumbnailContainer(imageUrl) {
+        const thumbnailContainer = document.createElement('div');
+        thumbnailContainer.classList.add('p-3', 'custom-image-thumbnail');
 
-        dropzone.files.push(file);
+        const input = document.createElement('input');
+        input.type = 'image';
+        input.classList.add('custom-image-container');
+        input.src = imageUrl;
+        input.alt = 'Thumbnail';
+        input.style.width = '120px';
+        input.style.height = '120px';
+        input.style.objectFit = 'cover';
+
+        const deleteButton = document.createElement('i');
+        deleteButton.classList.add('btn', 'rounded-circle', 'rounded-circle', 'btn-active-color-primary', 'bg-body', 'p-1', 'bi', 'bi-x', 'fs-2', 'custom-corner-button');
+        deleteButton.addEventListener('click', function() {
+            dropzoneContent.removeChild(thumbnailContainer);
+            message.style.display = dropzoneContent.childElementCount === 0 ? 'block' : 'none';
+        });
+
+        thumbnailContainer.appendChild(input);
+        thumbnailContainer.appendChild(deleteButton);
+
+        return thumbnailContainer;
     }
 </script>

@@ -9,8 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = mysqli_real_escape_string($connection, $_POST['description']);
     $owner_id = mysqli_real_escape_string($connection, $_POST['owner_id']);
     $animal_type = mysqli_real_escape_string($connection, $_POST['animal_type']);
+    $mainImageNoChange = isset($_POST['mainImageNoChange']) ? mysqli_real_escape_string($connection, $_POST['mainImageNoChange']) : null;
 
-    $imageQuery = "SELECT pict_name FROM animalpictures WHERE animal_id = '$animal_id';";
+    if (isset($mainImageNoChange)) {
+        $imageQuery = "SELECT pict_name FROM animalpictures WHERE animal_id = '$animal_id' AND is_thumbnail = 0;";
+    } else {
+        $imageQuery = "SELECT pict_name FROM animalpictures WHERE animal_id = '$animal_id';";
+    }
     $imageResult = mysqli_query($connection, $imageQuery);
     if ($imageResult) {
         while ($imageRow = mysqli_fetch_assoc($imageResult)) {
@@ -22,7 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-    $deletePictureQuery = "DELETE FROM animalpictures WHERE animal_id='$animal_id'";
+
+    if (isset($mainImageNoChange)) {
+        $deletePictureQuery = "DELETE FROM animalpictures WHERE animal_id='$animal_id' AND is_thumbnail = 0";
+    } else {
+        $deletePictureQuery = "DELETE FROM animalpictures WHERE animal_id='$animal_id'";
+    }
     mysqli_query($connection, $deletePictureQuery);
 
     $updateAnimalQuery = "UPDATE animaltable 
@@ -34,9 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     mysqli_query($connection, $updateAnimalQuery);
 
-    // Check if files are present in the request
     if (!empty($_FILES['file']['name'][0])) {
-        // Continue with file handling logic
 
         $targetFolder = 'images/animal_images/';
 

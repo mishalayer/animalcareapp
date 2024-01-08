@@ -123,6 +123,10 @@
     text-indent: 2em;
 }
 
+.custom-paragraph-container {
+    width: 100%;
+}
+
 .custom-image-roll {
     width: 33.33%;
     flex: 0 0 auto;
@@ -189,7 +193,7 @@
     right: 20px;
 }
 
-.custom-image.container {
+.custom-image-container {
     border-radius: 0.475rem;
 }
 

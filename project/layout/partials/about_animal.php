@@ -102,8 +102,8 @@ if (isset($_GET['animal_id'])) {
                         <a class="mx-auto mx-md-0 mb-md-0 mb-5" data-fslightbox="lightbox-animal-gallery" href="<?php echo $thumbnailURL; ?>">
                             <img class="custom-image mb-0 me-md-10 me-0" src="<?php echo $thumbnailURL; ?>" alt="Thumbnail Image">
                         </a>
-                        <div class="fs-5 p-5 fw-semibold text-gray-600 border-1 border-dashed card-rounded">
-                            <p class="custom-paragraph mb-0"><?php echo $description; ?></p>
+                        <div class="fs-5 p-5 fw-semibold text-gray-600 border-1 border-dashed card-rounded custom-paragraph-container">
+                            <p class="custom-paragraph mb-0 text-justify"><?php echo $description; ?></p>
                         </div>
                     </div>
                 <?php endif; ?>

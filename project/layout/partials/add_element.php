@@ -311,10 +311,9 @@
         input.style.width = '120px';
         input.style.height = '120px';
         input.style.objectFit = 'cover';
-
         input.addEventListener('load', function() {
             const deleteButton = document.createElement('i');
-            deleteButton.classList.add('btn', 'btn-danger', 'p-2', 'bi', 'bi-trash', 'fs-1', 'custom-corner-button');
+            deleteButton.classList.add('btn', 'rounded-circle', 'rounded-circle', 'btn-active-color-primary', 'bg-body', 'p-1', 'bi', 'bi-x', 'fs-2', 'custom-corner-button');
             deleteButton.addEventListener('click', function() {
                 dropzoneContent.removeChild(thumbnailContainer);
                 message.style.display = dropzoneContent.childElementCount === 0 ? 'block' : 'none';
