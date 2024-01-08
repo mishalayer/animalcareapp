@@ -123,24 +123,44 @@
 <script src="assets/plugins/global/plugins.bundle.js"></script>
 <script src="assets/js/scripts.bundle.js"></script>
 <script>
-    document.querySelector("#submit_animal_button").addEventListener("click", function(event) {
+    document.querySelector("#submit_animal_button").addEventListener("click", async function(event) {
         event.preventDefault();
 
         var formData = new FormData(document.getElementById("add_animal_form"));
-
         formData.append("owner_id", <?php echo $_SESSION['user_id']; ?>);
 
         var mainImageInput = document.querySelector('[name="avatar"]');
-
         if (mainImageInput.files.length > 0) {
-            formData.append('file[]', mainImageInput.files[0]);
+            formData.append('file[]', mainImageInput.files[0], 'main_image.png');
             formData.append('is_thumbnail[]', 1);
         }
 
-        myDropzone.files.forEach(function(file) {
-            formData.append('file[]', file);
+        var dropzoneContent = document.getElementById('dropzone_content');
+        var thumbnailContainers = dropzoneContent.getElementsByClassName('custom-image-thumbnail');
+
+        var fileCreationPromises = [];
+
+        for (let i = 0; i < thumbnailContainers.length; i++) {
+            var img = thumbnailContainers[i].querySelector('.custom-image-container');
+            if (img) {
+                var fileCreationPromise = fetch(img.src)
+                    .then(response => response.blob())
+                    .then(blob => {
+                        return new File([blob], 'image_' + (i + 1) + '.png', {
+                            type: 'image/png'
+                        });
+                    });
+
+                fileCreationPromises.push(fileCreationPromise);
+            }
+        }
+
+        var files = await Promise.all(fileCreationPromises);
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append('file[]', files[i]);
             formData.append('is_thumbnail[]', 0);
-        });
+        }
 
         fetch('submit_animal.php', {
                 method: 'POST',
@@ -282,15 +302,17 @@
     function createThumbnailContainer(file) {
         const thumbnailContainer = document.createElement('div');
         thumbnailContainer.classList.add('p-3', 'custom-image-thumbnail');
-        const img = document.createElement('img');
-        img.classList.add('rounded');
-        img.src = URL.createObjectURL(file);
-        img.alt = 'Thumbnail';
-        img.style.width = '120px';
-        img.style.height = '120px';
-        img.style.objectFit = 'cover';
 
-        img.addEventListener('load', function() {
+        const input = document.createElement('input');
+        input.type = 'image';
+        input.classList.add('custom-image-container');
+        input.src = URL.createObjectURL(file);
+        input.alt = 'Thumbnail';
+        input.style.width = '120px';
+        input.style.height = '120px';
+        input.style.objectFit = 'cover';
+
+        input.addEventListener('load', function() {
             const deleteButton = document.createElement('i');
             deleteButton.classList.add('btn', 'btn-danger', 'p-2', 'bi', 'bi-trash', 'fs-1', 'custom-corner-button');
             deleteButton.addEventListener('click', function() {
@@ -298,7 +320,7 @@
                 message.style.display = dropzoneContent.childElementCount === 0 ? 'block' : 'none';
             });
 
-            thumbnailContainer.appendChild(img);
+            thumbnailContainer.appendChild(input);
             thumbnailContainer.appendChild(deleteButton);
 
             dropzoneContent.appendChild(thumbnailContainer);
@@ -306,24 +328,4 @@
 
         return thumbnailContainer;
     }
-</script>
-
-
-<script>
-    // Dropzone.autoDiscover = false;
-
-    // var myDropzone = new Dropzone("#animal_dropzone", {
-    //     url: "submit_animal.php",
-    //     maxFiles: 3,
-    //     acceptedFiles: "image/*",
-    //     addRemoveLinks: true,
-    //     autoProcessQueue: false,
-    // });
-
-    // myDropzone.on("addedfile", function(file) {
-    //     if (myDropzone.files.length > myDropzone.options.maxFiles) {
-    //         var removedFile = myDropzone.files[0];
-    //         myDropzone.removeFile(removedFile);
-    //     }
-    // });
 </script>

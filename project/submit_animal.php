@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_query($connection, $insertPictureQuery);
     }
 
-    $logs_query = "INSERT INTO logs (object, action, initiator) VALUES ('" . "ცხოველის ID=" . $animalId . " " . $name . "', 'ცხოველის განთავსება', '" . $_SESSION['username'] ."');";
+    $logs_query = "INSERT INTO logs (object, action, initiator) VALUES ('" . "ცხოველის ID=" . $animalId . " " . $name . "', 'ცხოველის განთავსება', '" . $_SESSION['username'] . "');";
     mysqli_query($connection, $logs_query);
 
     echo json_encode(['status' => 'success', 'message' => 'Animal and images uploaded successfully']);
