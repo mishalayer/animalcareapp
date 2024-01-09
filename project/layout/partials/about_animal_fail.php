@@ -7,8 +7,13 @@
                 </button>
             </a>
             <div class="card-body px-lg-17 pt-lg-17 pb-lg-3">
-                <div class="text-center mb-5">
+                <div class="text-center">
                     <img src="images/custom_images/404notfound.png" style="width: 100%; max-width: 450px;">
+                </div>
+                <div class="mb-5 d-flex justify-content-center">
+                    <div class="credit-text">
+                        <p class="mb-0 text-end fs-8 text-gray-400">ილუსტრაცია შექმნილია Freepik-ის მიერ www.flaticon.com</a></p>
+                    </div>
                 </div>
                 <div class="mb-18 d-flex flex-column flex-md-row">
                     <div class="fs-5 p-5 fw-semibold text-gray-600 card-rounded custom-paragraph-container">
