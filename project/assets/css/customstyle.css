@@ -197,6 +197,11 @@
     border-radius: 0.475rem;
 }
 
+.credit-text {
+    max-width: 550px;
+    width: 80%
+}
+
 @media only screen and (max-width: 600px) {
     .customSpan {
         max-width: 150px;
